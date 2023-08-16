@@ -1,0 +1,131 @@
+@import ../../../styles/helpers
+
+.head
+    margin-bottom: 44px
+    +t
+        margin-bottom: 32px
+    +m
+        flex-wrap: wrap
+        margin-bottom: 24px
+    .form
+        +t
+            width: 300px
+        +m
+            width: 100%
+            margin-top: 16px
+            order: 3
+
+.title
+    margin-right: 24px
+
+.sorting
+    display: flex
+    margin-left: auto
+
+.link
+    flex-shrink: 0
+    width: 40px
+    height: 40px
+    border-radius: 8px
+    svg
+        fill: $shades1
+        transition: fill .2s
+    &:hover
+        svg
+            fill: $n7
+            +dark
+                fill: $n1
+    &.active
+        background: $n1
+        box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.1), inset 0px -1px 1px rgba(0, 0, 0, 0.04), inset 0px 2px 0px rgba(255, 255, 255, 0.25)
+        svg
+            fill: $n7
+        +dark
+            box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.1), inset 0px -1px 1px rgba(0, 0, 0, 0.04), inset 0px 2px 0px rgba(255, 255, 255, 0.05)
+            background: $n8
+            svg
+                fill: $n1
+    &:not(:last-child)
+        margin-right: 12px
+
+.list
+    display: flex
+    flex-wrap: wrap
+    margin: -32px -12px 0
+    +a
+        display: block
+        margin: 0
+
+.product
+    flex: 0 0 calc(33.333% - 24px)
+    width: calc(33.333% - 24px)
+    margin: 32px 12px 0
+    +t
+        flex: 0 0 calc(50% - 24px)
+        width: calc(50% - 24px)
+    +a
+        width: 100%
+        margin: 0
+        &:not(:last-child)
+            margin-bottom: 32px
+
+.foot
+    margin-top: 44px
+    text-align: center
+    .button
+        .loader
+            transform: scale(.8)
+            margin: 0 18px 0 8px
+.table
+    display: table
+    width: 100%
+    +t
+        display: block
+
+.row
+    display: table-row
+    +t
+        display: none
+    &.active
+        .col
+            &:not(:first-child):not(:nth-child(2))
+                display: none
+            &:nth-child(2)
+                &:after
+                    right: 12px
+
+.col
+    position: relative
+    display: table-cell
+    padding: 0 12px 16px
+    vertical-align: middle
+    +caption1
+    color: $n4
+    &:after
+        content: ""
+        position: absolute
+        left: 0
+        bottom: 0
+        right: 0
+        height: 1px
+        background: $n3
+        +dark
+            background: $n6
+    &:first-child
+        width: 56px
+        font-size: 0
+        &:after
+            left: 12px
+    &:last-child
+        &:after
+            right: 12px
+    
+.foot
+    margin-top: 20px
+    text-align: center
+    .button
+        .loader
+            transform: scale(.8)
+            margin: 0 18px 0 8px
+.w100
+    width: 100%

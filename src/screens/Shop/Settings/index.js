@@ -9,7 +9,7 @@ import { Range, getTrackBackground } from "react-range";
 import useDarkMode from "use-dark-mode";
 
 const options = ["Featured", "Popular", "New"];
-const optionsRating = ["1 and up", "2 and up", "3 and up", "4 and up", "5"];
+const optionsRating = ["91 and above", "81 to 90", "71 to 80", "61 to 70", "below 60"];
 const filters = [
   "All products",
   "UI Kit",
@@ -44,16 +44,7 @@ const Settings = () => {
 
   return (
     <div className={styles.settings}>
-      <Form
-        className={styles.form}
-        value={search}
-        setValue={setSearch}
-        onSubmit={() => handleSubmit()}
-        placeholder="Search for products"
-        type="text"
-        name="search"
-        icon="search"
-      />
+    
       <div className={styles.group}>
         <div className={styles.item}>
           <Dropdown
@@ -67,6 +58,16 @@ const Settings = () => {
           />
         </div>
         <div className={styles.item}>
+        <Form
+        className={styles.form}
+        value={search}
+        setValue={setSearch}
+        onSubmit={() => handleSubmit()}
+        placeholder="Search for products"
+        type="text"
+        name="search"
+        icon="search"
+      />
           <div className={styles.label}>Showing</div>
           <div className={styles.list}>
             {filters.map((x, index) => (
@@ -81,83 +82,7 @@ const Settings = () => {
             ))}
           </div>
         </div>
-        <div className={styles.item}>
-          <div className={styles.label}>Price</div>
-          <Range
-            values={values}
-            step={STEP}
-            min={MIN}
-            max={MAX}
-            onChange={(values) => {
-              setValues(values);
-            }}
-            renderTrack={({ props, children }) => (
-              <div
-                onMouseDown={props.onMouseDown}
-                onTouchStart={props.onTouchStart}
-                style={{
-                  ...props.style,
-                  width: "100%",
-                  paddingTop: 20,
-                }}
-              >
-                <div
-                  ref={props.ref}
-                  style={{
-                    height: "4px",
-                    width: "100%",
-                    borderRadius: "2px",
-                    background: getTrackBackground({
-                      values,
-                      colors: darkMode.value
-                        ? ["#272B30", "#2A85FF", "#272B30"]
-                        : ["#EFEFEF", "#2A85FF", "#EFEFEF"],
-                      min: MIN,
-                      max: MAX,
-                    }),
-                    alignSelf: "center",
-                  }}
-                >
-                  {children}
-                </div>
-              </div>
-            )}
-            renderThumb={({ index, props, isDragged }) => (
-              <div
-                {...props}
-                style={{
-                  ...props.style,
-                  height: "16px",
-                  width: "16px",
-                  borderRadius: "50%",
-                  backgroundColor: "#FFF",
-                  border: "2px solid #2A85FF",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  boxShadow: "inset 0px 2px 2px #FFFFFF",
-                }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "calc(100% + 5px)",
-                    color: "#fff",
-                    fontWeight: "600",
-                    fontSize: "12px",
-                    lineHeight: "18px",
-                    fontFamily: "Inter",
-                    padding: "4px 8px",
-                    borderRadius: "8px",
-                    backgroundColor: "#272B30",
-                  }}
-                >
-                  ${values[index].toFixed(0)}
-                </div>
-              </div>
-            )}
-          />
-        </div>
+      
         <div className={styles.item}>
           <div className={styles.box}>
             <Dropdown
@@ -167,10 +92,10 @@ const Settings = () => {
               value={rating}
               setValue={setRating}
               options={optionsRating}
-              label="Rating"
+              label="Score"
               upBody
             />
-            <Icon name="heart-fill" size="24" />
+            <Icon name="arrows-up-down" size="24" />
           </div>
         </div>
         <div className={styles.btns}>

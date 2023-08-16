@@ -8,7 +8,6 @@ import Tooltip from "../../components/Tooltip";
 import TooltipGlodal from "../../components/TooltipGlodal";
 import Card from "../../components/Card";
 import { Link } from "react-router-dom";
-import Candidates from "./Candidates";
 
 const KeyCodes = {
     comma: 188,
@@ -174,7 +173,7 @@ const JobDescription = ({ className }) => {
             )}
             {activeIndex === 1 && (
               <>
-              <Candidates/>
+               <div>Candidates</div>
               </>
             )}
           </div>

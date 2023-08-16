@@ -25,6 +25,7 @@ import Payouts from "./screens/Payouts";
 import Statements from "./screens/Statements";
 import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
+import History from "./screens/History";
 
 function App() {
     return (
@@ -196,6 +197,15 @@ function App() {
                     element={
                         <Page title="Affiliate center">
                             <AffiliateCenter />
+                        </Page>
+                    }
+                />
+                
+                <Route
+                    path="history"
+                    element={
+                        <Page title="">
+                            <History />
                         </Page>
                     }
                 />

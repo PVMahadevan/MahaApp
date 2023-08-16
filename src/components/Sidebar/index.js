@@ -64,7 +64,7 @@ const navigation = [
     {
         title: "History",
         icon: "multiselect",
-        url: "/shop",
+        url: "/history",
     },
     // {
     //     title: "Income",
