@@ -92,7 +92,7 @@ const navigation = [
     {
         title: "Candidates",
         icon: "profile-circle",
-        url: "/promote",
+        url: "/Candidates",
     },
 ];
 

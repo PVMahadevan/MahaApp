@@ -13,33 +13,34 @@ const Users = ({
   onSubmit,
   search,
   setSearch,
+  onSelectUser
 }) => {
+  console.log("Users component rendering"); // Add this line
   const [activeId, setActiveId] = useState(items[0].id);
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <div className={cn(className, styles.users)}>
-      <div className={styles.nav}>
-        {navigation.map((x, index) => (
-          <button
-            className={cn(styles.button, {
-              [styles.active]: activeIndex === index,
-            })}
-            onClick={() => setActiveIndex(index)}
-            key={index}
-          >
-            <Icon name={x.icon} size="24" />
-            {x.title}
-          </button>
-        ))}
-      </div>
-      <div className={styles.list}>
+     
+      {/* <div className={styles.list}>
         {items.map((x, index) => (
           <Item
             item={x}
             activeId={activeId}
             setActiveId={setActiveId}
             setVisible={setVisible}
+            key={index}
+          />
+        ))}
+      </div> */}
+        <div className={styles.list}>
+        {items.map((x, index) => (
+          <Item
+            item={x}
+            activeId={activeId}
+            setActiveId={setActiveId}
+            setVisible={setVisible}
+            onSelectUser={onSelectUser} // Pass the onSelectUser function
             key={index}
           />
         ))}

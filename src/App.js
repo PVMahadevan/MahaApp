@@ -26,6 +26,7 @@ import Statements from "./screens/Statements";
 import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
 import History from "./screens/History";
+import Candidates from "./screens/Candidates";
 
 function App() {
     return (
@@ -206,6 +207,14 @@ function App() {
                     element={
                         <Page title="">
                             <History />
+                        </Page>
+                    }
+                />
+                 <Route
+                    path="candidates"
+                    element={
+                        <Page title="">
+                            <Candidates />
                         </Page>
                     }
                 />

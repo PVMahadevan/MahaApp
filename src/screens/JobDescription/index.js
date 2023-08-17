@@ -73,6 +73,7 @@ const JobDescription = ({ className }) => {
                                 setValue={setCategory}
                                 options={optionsCategory}
                             />
+                            Selected Category: {category}
                             <div className={styles.head}>
                                 <div className={styles.label}>
                                     Tags{" "}
@@ -84,7 +85,7 @@ const JobDescription = ({ className }) => {
                                     />
                                 </div>
                                 <div className={styles.counter}>
-                                    <span>1</span>/12 tags
+                                    <span> {tags.length}</span>/12 tags
                                 </div>
                             </div>
                             <div className={styles.tags}>
@@ -107,7 +108,7 @@ const JobDescription = ({ className }) => {
                                     allowUnique={true}
                                     allowDragDrop={true}
                                     inline={true}
-                                    inputFieldPosition="inline"
+                                    inputFieldPosition="bottom"
                                     allowAdditionFromPaste={true}
                                     editable={true}
                                     clearAll={false}

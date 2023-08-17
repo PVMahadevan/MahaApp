@@ -13,7 +13,9 @@ const Messages = ({
   parameters,
   messages,
 }) => {
+  console.log("Selected user's messages:", messages);
   return (
+    
     <div className={cn(className, styles.messages, { [styles.show]: visible })}>
       <Panel
         actions={actions}
@@ -29,7 +31,6 @@ const Messages = ({
             <Message item={x} key={index} />
           ))}
         </div>
-        <Send />
       </div>
     </div>
   );
