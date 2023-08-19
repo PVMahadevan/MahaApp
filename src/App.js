@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import "./styles/app.sass";
 import Page from "./components/Page";
 import JobDescription from "./screens/JobDescription";
+<<<<<<< HEAD
 import ProductsDashboard from "./screens/ProductsDashboard";
 import NewProduct from "./screens/NewProduct";
 import Drafts from "./screens/Drafts";
@@ -27,6 +28,8 @@ import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
 import History from "./screens/History";
 import Candidates from "./screens/Candidates";
+=======
+>>>>>>> 5c3ffa2 (deleted unwanted folders)
 
 function App() {
     return (
@@ -39,8 +42,10 @@ function App() {
                             {/* <Home /> */}
                             <JobDescription />
                         </Page>
+                    
                     }
                 />
+<<<<<<< HEAD
                 <Route
                     path="products/dashboard"
                     element={
@@ -221,6 +226,12 @@ function App() {
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="sign-in" element={<SignIn />} />
                 <Route path="pagelist" element={<PageList />} />
+=======
+               
+                
+               
+               
+>>>>>>> 5c3ffa2 (deleted unwanted folders)
             </Route>
         </Routes>
     );

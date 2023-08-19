@@ -61,7 +61,7 @@ const JobDescription = ({ className }) => {
                 <div className={styles.col}>
                     <Card
                         className={cn(styles.card, className)}
-                        title="Job Description"
+                        title="RoleForge JD"
                         classTitle="title-green"
                     >
                         <form className={cn(className, styles.form)} action="" >
@@ -156,10 +156,10 @@ const JobDescription = ({ className }) => {
               <>
                 <div className={cn(styles.results)}>
                     <div className={styles.title}>
-                        Job Description: UI UX Designer
+                        Job Description: {category}
                     </div>
                     <div className={styles.subTitle}>
-                    Position Overview: 
+                    Role Overview: 
                     </div>
                     <div className={styles.content}>
                     We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
