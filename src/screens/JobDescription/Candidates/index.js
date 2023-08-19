@@ -3,12 +3,7 @@ import cn from "classnames";
 import styles from "./Candidates.module.sass";
 import Card from "../../../components/Card";
 import Form from "../../../components/Form";
-import Icon from "../../../components/Icon";
-import Market from "../../Released/Market";
-import Product from "../../../components/Product";
 import Loader from "../../../components/Loader";
-import Panel from "../../Released/Panel";
-import Table from "../../CustomerList/Table";
 import Checkbox from "../../../components/Checkbox";
 import Row from "./Row";
 import Filters from "../../../components/Filters";
@@ -113,7 +108,6 @@ const Candidates = ({ className, activeTable, setActiveTable }) => {
              
         </div>
       </Card>
-      <Panel />
     </>
   );
 };
