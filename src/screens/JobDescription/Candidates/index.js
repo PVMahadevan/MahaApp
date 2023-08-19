@@ -8,7 +8,6 @@ import Market from "../../Released/Market";
 import Product from "../../../components/Product";
 import Loader from "../../../components/Loader";
 import Panel from "../../Released/Panel";
-import Table from "../../CustomerList/Table";
 import Checkbox from "../../../components/Checkbox";
 import Row from "./Row";
 import Filters from "../../../components/Filters";
