@@ -5,6 +5,7 @@ import JobDescription from "./screens/JobDescription";
 import CustomerList from "./screens/CustomerList";
 import MessageCenter from "./screens/MessageCenter";
 import Candidates from "./screens/Candidates";
+import History from "./screens/History";
 
 function App() {
     return (
@@ -43,6 +44,14 @@ function App() {
                     element={
                         <Page title="">
                             <Candidates />
+                        </Page>
+                    }
+                />
+                 <Route
+                    path="history"
+                    element={
+                        <Page title="">
+                            <History />
                         </Page>
                     }
                 />

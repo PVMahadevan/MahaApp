@@ -42,76 +42,95 @@ const parameters = [
     content: "$1,235.00",
   },
 ];
-const messages = [
+const experience = [
     {
       id: 0,
-      man: "Orval Casper",
+      name: "Kathryn Murphy",
       avatar: "/images/content/avatar-1.jpg",
-      time: "11:59AM",
-      content:
-        'When do you release the coded for the Fleet - Travel kit? <a href="https://ui8.net" target="_blank" rel="noopener noreferrer">https://ui8.net/product-link</a>',
-    },
-    {
-      id: 1,
-      man: "Britney Beer",
-      avatar: "/images/content/avatar.jpg",
-      time: "11:59AM",
-      content:
-        'Hi @orval, thanks for contacting.<br>Yes, I’m working on it. It would be released next 2 weeks. You could check the progress here: <a href="https://ui8.net" target="_blank" rel="noopener noreferrer">https://ui8.net/progress</a><br></br>Thanks for your patience and understanding. <span role="img" aria-label="pray">🙌</span><br> Regards,<br></br>Br',
+      score: "45",
+      currentDesignation: 'Senior Product Designer',
+      experience: "6yr",
+      location: "Bangalore",
+      phone: "+5324 34534 54",
+      source: "LinkedIn",
+      bio: "Passionate about crafting exceptional user experiences, I'm a Senior Product Designer with [X+] years of industry expertise. My journey in design has been marked by a relentless pursuit of innovation, marrying user-centered principles with strategic vision. With a keen eye for detail and a deep understanding of design systems, I've successfully delivered impactful solutions for [X] projects across diverse industries.",
+      keySkills: ['User-Centered Design', 'Design Thinking', 'Interaction Design', 'Visual Design', 'Prototyping', 'Information Architecture', 'Usability Testing', 'Collaboration', 'Design Systems', 'User Research', 'Data-Driven Design', 'Project Management'],
+      employement: [
+        {
+            id:0,
+            designation: 'Senior Product Designer',
+            companyName: 'XYZ company',
+            jobType: 'Full-time',
+            startDate: 'Apr 2021',
+            endDate: '',
+            role: 'Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs. Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.',
+
+
+        },
+        {
+            id:1,
+            designation: 'Senior UI Designer',
+            companyName: 'ABC company',
+            jobType: 'Full-time',
+            startDate: 'Apr 2021',
+            endDate: '',
+            role: 'Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs. Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.',
+
+
+        }
+      ],
     },
   ];
   
 const users = [
   {
     id: 0,
-    man: "Jarret Waelchi",
+    name: "Jarret Waelchi",
     avatar: "/images/content/avatar-1.jpg",
-    time: "03:30PM",
-    content: "When do you release the coded for the Fleet - Travel kit?",
+    designation: "Senior Product Designer",
+    score: "45",
+    experience: "6yr",
+    location: "Bangalore",
     new: true,
     online: false,
-    messages: [messages[0]],
+    detail: [experience[0]],
   },
   {
     id: 1,
-    man: "Orval Casper",
+    name: "Orval Casper",
     avatar: "/images/content/avatar-2.jpg",
-    time: "11:59AM",
-    content: "When do you release the coded for the Fleet - Travel kit?",
+    designation: "Senior Product Designer",
+    score: "50",
+    experience: "4yr",
+    location: "Bangalore",
     new: false,
     online: true,
-    messages: [messages[1]],
+    detail: [experience[0]],
   },
   {
     id: 2,
-    man: "Michel Emard",
+    name: "Michel Emard",
     avatar: "/images/content/avatar-3.jpg",
-    time: "09:30AM",
-    content: "When do you release the coded for the Fleet - Travel kit?",
+    designation: "Senior Product Designer",
+    score: "55",
+    experience: "3yr",
+    location: "Delhi",
     new: true,
     online: false,
-    messages: [messages[0]],
+    detail: [experience[0]],
   },
   {
     id: 3,
-    man: "Reuben Ward",
+    name: "Reuben Ward",
     avatar: "/images/content/avatar-4.jpg",
-    time: "08:00AM",
-    content: "When do you release the coded for the Fleet - Travel kit?",
+    designation: "Senior Product Designer",
+    score: "40",
+    experience: "7yr",
+    location: "Chennai",
     new: false,
     online: false,
-    messages: [messages[0]],
-  },
-  {
-    id: 4,
-    man: "Evalyn Jenkins",
-    avatar: "/images/content/avatar-5.jpg",
-    time: "07:01AM",
-    content: "When do you release the coded for the Fleet - Travel kit?",
-    new: false,
-    online: false,
-    messages: [messages[0]],
-  },
+    detail: [experience[0]],
+  }
 ];
 
 
@@ -127,6 +146,12 @@ const Candidates = () => {
 
   return (
     <div className={cn(styles.wrapper, { [styles.active]: visible })}>
+
+
+
+
+
+
       <Users
        onSelectUser={(user) => {
         console.log("Selected user:", user);
@@ -141,13 +166,14 @@ const Candidates = () => {
         onSubmit={() => handleSubmit()}
         // onSelectUser={(user) => setSelectedUser(user)} // Set selected user
       />
+      
       <Messages
         className={styles.messages}
         visible={visible}
         setVisible={setVisible}
         actions={actions}
         parameters={parameters}
-        messages={selectedUser ? selectedUser.messages : []} // Pass selected user's messages
+        messages={selectedUser ? selectedUser.detail : []} // Pass selected user's messages
       />
     </div>
   );

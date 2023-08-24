@@ -17,15 +17,14 @@ const Messages = ({
   return (
     
     <div className={cn(className, styles.messages, { [styles.show]: visible })}>
-      <Panel
+
+      {/* <Panel
         actions={actions}
         parameters={parameters}
         setVisible={setVisible}
-      />
+      /> */}
       <div className={styles.wrapper}>
-        <button className={cn("button-stroke button-small", styles.button)}>
-          Load conversation
-        </button>
+      
         <div className={styles.list}>
           {messages.map((x, index) => (
             <Message item={x} key={index} />

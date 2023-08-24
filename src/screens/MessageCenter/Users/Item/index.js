@@ -26,13 +26,16 @@ const Item = ({ item, setVisible, activeId, setActiveId,onSelectUser }) => {
             </div>
             <div className={styles.details}>
                 <div className={styles.head}>
-                    <div className={styles.man}>{item.man}</div>
-                    <div className={styles.time}>{item.time}</div>
+                    <div className={styles.name}>{item.name}</div>
+                    <div className={styles.flex}>
+                    <div className={styles.score}><img src="/images/score.png" width="17"/>{item.score}</div>
+                    <div className={styles.score}><img src="/images/favourite.png" width="17"/></div>
+                    </div>
                 </div>
                 <div
-                    className={styles.message}
-                    dangerouslySetInnerHTML={{ __html: item.content }}
-                ></div>
+                    className={styles.designation}>{item.designation}</div>
+                <div
+                    className={styles.message}><span>{item.experience}</span>  .  <span>{item.location}</span></div>
             </div>
         </div>
     );

@@ -45,7 +45,7 @@ const Users = ({
           />
         ))}
       </div>
-      <Form
+      {/* <Form
         className={styles.form}
         value={search}
         setValue={setSearch}
@@ -54,7 +54,7 @@ const Users = ({
         type="text"
         name="search"
         icon="search"
-      />
+      /> */}
     </div>
   );
 };
