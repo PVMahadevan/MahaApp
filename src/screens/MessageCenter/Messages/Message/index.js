@@ -22,43 +22,56 @@ const Message = ({ item }) => {
 
                     </div>
                     <div className={styles.borderHorizontal}></div>
-                    <div>
-                    <div className={`${styles.flexRow} ${styles.flxspbw}`}>
-                        <div className={styles.metricItem}><img src="/images/experience.png" width="23"/> {item.experience}</div>
-                        <div className={styles.metricItem}><img src="/images/phone.png" width="23"/> {item.phone}</div>
-                    </div>
-                    <div className={`${styles.flexRow} ${styles.flxspbw}`}>
-                        <div className={styles.metricItem}><img src="/images/location.png" width="23"/> {item.location}</div>
-                        <div className={styles.metricItem}><img src="/images/linkedin.png" width="23"/> {item.source}</div>
-                    </div>
+                    <div className={`${styles.flexColumn} ${styles.gap4}`}>
+                        <div className={`${styles.flexRow} ${styles.flxspbw}`}>
+                            <div className={styles.metricItem}><img src="/images/experience.png" width="23" /> {item.experience}</div>
+                            <div className={styles.metricItem}><img src="/images/phone.png" width="23" /> {item.phone}</div>
+                        </div>
+                        <div className={`${styles.flexRow} ${styles.flxspbw}`}>
+                            <div className={styles.metricItem}><img src="/images/location.png" width="23" /> {item.location}</div>
+                            <div className={styles.metricItem}><img src="/images/linkedin.png" width="23" /> {item.source}</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div className={styles.borderHorizontal}></div>
             <div className={styles.details}>
-                <div>Bio</div>
-                <div>{item.bio}</div>
-                <div>Key skills</div>
-                <div>
-                    {item.keySkills.map((x, index) => (
-                        <div className={styles.parameter} key={index}>
-                            <span>{x}</span>
-                        </div>
-                    ))}
+                <div className={`${styles.flexColumn} ${styles.gap2}`}>
+                    <div className={styles.title}>Bio</div>
+                    <div className={styles.text}>{item.bio}</div>
                 </div>
-                <div>Empoyment</div>
+                <div className={styles.borderHorizontal}></div>
+                <div className={`${styles.flexColumn} ${styles.gap2}`}>
+                    <div className={styles.title}>Key skills</div>
+                    <div className={styles.chipContainer}>
+                        {item.keySkills.map((x, index) => (
+                            <div className={styles.chip} key={index}>
+                                <span>{x}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className={`${styles.flexColumn} ${styles.gap2}`}>
+                <div className={styles.title}>Empoyment</div>
                 <div>
                     {item.employement.map((x, index) => (
                         <div className={styles.parameter} key={index}>
-                            <div>
-                                <div>{x.designation}</div>
-                                <div>{x.companyName}</div>
-                                <div>{x.jobType}</div>
+                            <div className={`${styles.flexColumn} ${styles.gap2}`}>
+                            <div>{x.designation}</div>
+                                <div className={`${styles.flexRow} ${styles.jobMetric}`}>
+                                <div className={styles.mr10}>{x.companyName}</div>
+                                <div>{x.jobType}</div> | 
                                 <div>{x.startDate} to Present {x.endDate}</div>
-                                <div>{x.role}</div>
-
+                                </div>
+                              <ul>
+                                {x.role.map((role, index) => (
+                                    <li>{role}</li>
+                                ))}
+                                </ul>
                             </div>
                         </div>
                     ))}
+                </div>
                 </div>
             </div>
         </div>

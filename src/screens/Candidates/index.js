@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Candidates.module.sass";
 import cn from "classnames";
 import Users from "../MessageCenter/Users";
@@ -63,7 +63,7 @@ const experience = [
             jobType: 'Full-time',
             startDate: 'Apr 2021',
             endDate: '',
-            role: 'Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs. Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.',
+            role: ['Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.', 'Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs.', 'Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.', 'Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.', 'Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.'],
 
 
         },
@@ -74,12 +74,49 @@ const experience = [
             jobType: 'Full-time',
             startDate: 'Apr 2021',
             endDate: '',
-            role: 'Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs. Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.',
+            role: ['Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.', 'Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs.', 'Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.', 'Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.', 'Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.'],
 
 
         }
       ],
     },
+    {
+        id: 1,
+        name: "Jarret Waelchi",
+        avatar: "/images/content/avatar-2.jpg",
+        score: "45",
+        currentDesignation: 'Senior Product Designer',
+        experience: "6yr",
+        location: "Bangalore",
+        phone: "+5324 34534 54",
+        source: "LinkedIn",
+        bio: "Passionate about crafting exceptional user experiences, I'm a Senior Product Designer with [X+] years of industry expertise. My journey in design has been marked by a relentless pursuit of innovation, marrying user-centered principles with strategic vision. With a keen eye for detail and a deep understanding of design systems, I've successfully delivered impactful solutions for [X] projects across diverse industries.",
+        keySkills: ['User-Centered Design', 'Design Thinking', 'Interaction Design', 'Visual Design', 'Prototyping', 'Information Architecture', 'Usability Testing', 'Collaboration', 'Design Systems', 'User Research', 'Data-Driven Design', 'Project Management'],
+        employement: [
+          {
+              id:0,
+              designation: 'Senior Product Designer',
+              companyName: 'XYZ company',
+              jobType: 'Full-time',
+              startDate: 'Apr 2021',
+              endDate: '',
+              role: ['Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.', 'Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs.', 'Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.', 'Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.', 'Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.'],
+  
+  
+          },
+          {
+              id:1,
+              designation: 'Senior UI Designer',
+              companyName: 'ABC company',
+              jobType: 'Full-time',
+              startDate: 'Apr 2021',
+              endDate: '',
+              role: ['Led the design of [X] successful product launches, resulting in [Y]% increase in user engagement and [Z]% improvement in user satisfaction.', 'Collaborated closely with cross-functional teams to define user requirements, create wireframes, prototypes, and high-fidelity designs.', 'Conducted user research and usability testing to gather insights, iterate on designs, and enhance the overall user experience.', 'Played a key role in establishing and maintaining the companys design system, ensuring consistency and efficiency in design processes.', 'Mentored and provided guidance to junior designers, fostering a culture of continuous learning and design excellence.'],
+  
+  
+          }
+        ],
+      },
   ];
   
 const users = [
@@ -105,7 +142,7 @@ const users = [
     location: "Bangalore",
     new: false,
     online: true,
-    detail: [experience[0]],
+    detail: [experience[1]],
   },
   {
     id: 2,
@@ -143,6 +180,13 @@ const Candidates = () => {
   const handleSubmit = (e) => {
     alert();
   };
+   // Set the selected user to the first user's detail when the component mounts
+   useEffect(() => {
+    console.log("All user:", users);
+    if (users.length > 0) {
+      setSelectedUser(users[0]);
+    }
+  }, [users]);
 
   return (
     <div className={cn(styles.wrapper, { [styles.active]: visible })}>
