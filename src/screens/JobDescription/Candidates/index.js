@@ -45,19 +45,19 @@ const Candidates = ({ className, activeTable, setActiveTable }) => {
         classTitle={cn("title-purple", styles.title)}
         head={
           <>
+           
+            
+            <div className={styles.sorting}>
             <Form
-              className={styles.form}
+              className={cn("mr-10", styles.form)}
               value={search}
               setValue={setSearch}
               onSubmit={() => handleSubmit()}
-              placeholder="Search product"
+              placeholder="Search candidates"
               type="text"
               name="search"
               icon="search"
             />
-            
-            <div className={styles.sorting}>
-             
                 <Filters
               className={styles.filters}
               title="Showing 10 of 24 customer"

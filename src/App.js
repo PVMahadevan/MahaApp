@@ -6,6 +6,7 @@ import CustomerList from "./screens/CustomerList";
 import MessageCenter from "./screens/MessageCenter";
 import Candidates from "./screens/Candidates";
 import History from "./screens/History";
+import Interview360 from "./screens/Interview360";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/">
                 <Route
                     index
+                    path="roleforgejd/jd"
                     element={
                         <Page title="">
                             <JobDescription />
@@ -31,16 +33,16 @@ function App() {
                 />
                
                 <Route
-                    path="message-center"
+                    path="interview360"
                     element={
-                        <Page title="Message center">
-                            <MessageCenter />
+                        <Page title="Interview360">
+                            <Interview360 />
                         </Page>
                     }
                 />
                
                  <Route
-                    path="candidates"
+                    path="roleforgejd/candidates"
                     element={
                         <Page title="">
                             <Candidates />
@@ -48,7 +50,7 @@ function App() {
                     }
                 />
                  <Route
-                    path="history"
+                    path="roleforgejd/history"
                     element={
                         <Page title="">
                             <History />

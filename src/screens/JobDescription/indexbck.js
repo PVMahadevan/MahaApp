@@ -135,48 +135,48 @@ const JobDescription = ({ className }) => {
                                 <span>Open in editor</span>
                             </Link>
                         }
-                    > 
-                    <div className={styles.nav}>
-                           {navigation.map((x, index) => (
+                    >
+                        <div className={styles.nav}>
+                            {navigation.map((x, index) => (
                                 <button
-                                className={cn(styles.link, {
-                                    [styles.active]: index === activeIndex,
-                                })}
-                                onClick={() => setActiveIndex(index)}
-                                key={index}
+                                    className={cn(styles.link, {
+                                        [styles.active]: index === activeIndex,
+                                    })}
+                                    onClick={() => setActiveIndex(index)}
+                                    key={index}
                                 >
-                                {x}
+                                    {x}
                                 </button>
                             ))}
-                            </div>
-                            <div className={styles.wrap}>
-            {activeIndex === 0 && (
-              <>
-                <div className={cn(styles.results)}>
-                    <div className={styles.title}>
-                        Job Description: UI UX Designer
-                    </div>
-                    <div className={styles.subTitle}>
-                    Position Overview: 
-                    </div>
-                    <div className={styles.content}>
-                    We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
-                    </div>
-                    <div className={styles.subTitle}>
-                    Position Overview: 
-                    </div>
-                    <div className={styles.content}>
-                    We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
-                    </div>
-                </div>
-              </>
-            )}
-            {activeIndex === 1 && (
-              <>
-               <div>Candidates</div>
-              </>
-            )}
-          </div>
+                        </div>
+                        <div className={styles.wrap}>
+                            {activeIndex === 0 && (
+                                <>
+                                    <div className={cn(styles.results)}>
+                                        <div className={styles.title}>
+                                            Job Description: UI UX Designer
+                                        </div>
+                                        <div className={styles.subTitle}>
+                                            Position Overview:
+                                        </div>
+                                        <div className={styles.content}>
+                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
+                                        </div>
+                                        <div className={styles.subTitle}>
+                                            Position Overview:
+                                        </div>
+                                        <div className={styles.content}>
+                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                            {activeIndex === 1 && (
+                                <>
+                                    <div>Candidates</div>
+                                </>
+                            )}
+                        </div>
                     </Card>
                 </div>
             </div>

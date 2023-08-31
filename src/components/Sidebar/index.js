@@ -9,45 +9,42 @@ import Help from "./Help";
 import Image from "../Image";
 
 const navigation = [
+    // {
+    //     title: "Job Description",
+    //     icon: "home",
+    //     url: "/",
+    // },
     {
-        title: "Job Description",
-        icon: "home",
-        url: "/",
+        title: "RoleForge JD",
+        // slug: "roleforgejd",
+        icon: "diamond",
+        add: false,
+        dropdown: [
+            {
+                title: "Job Description",
+                url: "/roleforgejd/jd",
+            },
+            {
+                title: "History",
+                url: "/roleforgejd/history",
+                counter: "4",
+                colorCounter: "#B5E4CA",
+            },
+            {
+                title: "Candidates",
+                url: "/roleforgejd/candidates",
+                counter: "120",
+                colorCounter: "#B5E4CA",
+            }
+        ],
+    },
+    {
+        title: "Interview360",
+        icon: "multiselect",
+        url: "/interview360",
     },
     // {
-    //     title: "Products",
-    //     slug: "products",
-    //     icon: "diamond",
-    //     add: true,
-    //     dropdown: [
-    //         {
-    //             title: "Dashboard",
-    //             url: "/products/dashboard",
-    //         },
-    //         {
-    //             title: "Drafts",
-    //             url: "/products/drafts",
-    //             counter: "2",
-    //             colorCounter: "#FFBC99",
-    //         },
-    //         {
-    //             title: "Released",
-    //             url: "/products/released",
-    //         },
-    //         {
-    //             title: "Comments",
-    //             url: "/products/comments",
-    //         },
-    //         {
-    //             title: "Scheduled",
-    //             url: "/products/scheduled",
-    //             counter: "8",
-    //             colorCounter: "#B5E4CA",
-    //         },
-    //     ],
-    // },
-    // {
-    //     title: "Customers",
+    //     title: "Interview360",
     //     slug: "customers",
     //     icon: "profile-circle",
     //     dropdown: [
@@ -61,11 +58,11 @@ const navigation = [
     //         },
     //     ],
     // },
-    {
-        title: "History",
-        icon: "multiselect",
-        url: "/history",
-    },
+    // {
+    //     title: "History",
+    //     icon: "multiselect",
+    //     url: "/history",
+    // },
     // {
     //     title: "Income",
     //     slug: "income",
@@ -89,11 +86,6 @@ const navigation = [
     //         },
     //     ],
     // },
-    {
-        title: "Candidates",
-        icon: "profile-circle",
-        url: "/Candidates",
-    },
 ];
 
 const Sidebar = ({ className, onClose }) => {
@@ -154,14 +146,27 @@ const Sidebar = ({ className, onClose }) => {
                     <Icon name="close" size="24" />
                 </button>
                 <div className={styles.foot}>
-                    {/* <button
+                    <button
                         className={styles.link}
-                        onClick={() => setVisibleHelp(true)}
+                        // onClick={() => setVisibleHelp(true)}
                     >
-                        <Icon name="help" size="24" />
-                        Help & getting started
-                        <div className={styles.counter}>8</div>
-                    </button> */}
+                        {/* <Icon name="help" size="24" /> */}
+                        About Us
+                        
+                    </button>
+                    <button
+                        className={styles.link}
+                    >
+                        Privacy Policy
+                        
+                    </button>
+                    <button
+                        className={styles.link}
+                    >
+                        Back to home
+                        
+                    </button>
+                    <hr/>
                     <Theme className={styles.theme} visibleSidebar={visible} />
                 </div>
             </div>

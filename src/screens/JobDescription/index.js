@@ -211,7 +211,7 @@ const JobDescription = ({ className }) => {
                         head={
                             <>
                                 <button
-                                    className={cn("button button-small", styles.button)}
+                                    className={cn("button button-small mr-10", styles.button)}
                                     onClick={downloadJobDescription}
                                 >
                                     <Icon name="edit" size="24" />
@@ -221,7 +221,7 @@ const JobDescription = ({ className }) => {
                                     className={cn("button button-small", styles.button)}
                                     onClick={downloadJobDescriptionAsPDF}
                                 >
-                                    <Icon name="file-pdf" size="24" /> {/* Assuming you have a PDF icon */}
+                                    <Icon name="upload" size="24" /> {/* Assuming you have a PDF icon */}
                                     <span>Export as PDF</span>
                                 </button>
                             </>
