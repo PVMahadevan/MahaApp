@@ -84,3 +84,45 @@ textarea
     letter-spacing: -0.21px
 .mr-10
     margin-right: 10px
+
+.slick-arrow 
+    position: absolute !important
+    z-index: 2 !important
+    width: 40px !important
+    height: 40px !important
+    border-radius: 50% !important
+    font-size: 0 !important
+    transition: all .2s !important
+    visibility: visible !important
+    opacity: 1 !important
+    svg 
+        position: relative
+        z-index: 2 
+    path 
+        fill: $n4
+        transition: fill .2s 
+    &:hover 
+        box-shadow: inset 0 0 0 2px $n6 
+    @include dark 
+        &:hover 
+            box-shadow: inset 0 0 0 2px $n3
+            path 
+                fill: $n6    
+.candidate-slider
+    padding-bottom: 50px
+    img
+        border-radius: 12px
+        width: 100px
+        height: 100%
+        -o-object-fit: cover
+        object-fit: cover
+.mt-10
+    margin-top: 10px
+
+.slick-prev
+    left: calc(50% - 48px)
+    bottom:0
+.slick-next 
+    right: calc(50% - 48px)
+    bottom:0
+

@@ -158,6 +158,8 @@
         +m
             margin-right: 0
 .results
+    height: calc(100vh - 450px)
+    overflow: auto
     .title
         display: flex
         padding: 5px 12px
@@ -181,3 +183,19 @@
         font-weight: 500
         line-height: 24px /* 171.429% */
         letter-spacing: -0.21px
+.flexColumn
+    display: flex
+    flex-direction: column
+.flexRow
+    display: flex !important
+    gap:20px
+    align-items: center
+    .score
+        img
+            width: 17px
+            height: auto
+.btnGroup
+    display: flex
+    gap: 10px
+    justify-content: flex-end
+    padding-top: 10px

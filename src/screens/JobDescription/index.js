@@ -9,6 +9,7 @@ import Card from "../../components/Card";
 import { Link } from "react-router-dom";
 import Candidates from "./Candidates";
 import { jsPDF } from "jspdf";
+import Slider from "react-slick";
 
 
 
@@ -16,12 +17,38 @@ const KeyCodes = {
     comma: 188,
     enter: 13,
 };
-
+const SlickArrow = ({ currentSlide, slideCount, children, ...props }) => (
+    <button {...props}>{children}</button>
+);
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 const navigation = ["Results", "Candidates"];
 
 const JobDescription = ({ className }) => {
+    const settings = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        nextArrow: (
+            <SlickArrow>
+                <Icon name="arrow-right" size="24" />
+            </SlickArrow>
+        ),
+        prevArrow: (
+            <SlickArrow>
+                <Icon name="arrow-left" size="24" />
+            </SlickArrow>
+        ),
+        responsive: [
+            {
+                breakpoint: 1023,
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+        ],
+    };
     const [activeIndex, setActiveIndex] = useState(0);
     const [desig, setDesig] = useState();
     const [tags, setTags] = useState([]);
@@ -74,32 +101,32 @@ const JobDescription = ({ className }) => {
         document.body.removeChild(link);
     };
 
-   
+
     const downloadJobDescriptionAsPDF = () => {
         const doc = new jsPDF();
         doc.setFontSize(16);
-    
+
         // Ensure desig is a string or access the correct property of desig
         const designation = typeof desig === 'string' ? desig : desig.title;
-        doc.text( "Job Description:" + designation , 10, 10);
-    
+        doc.text("Job Description:" + designation, 10, 10);
+
         doc.setFontSize(12);
         const wrappedText = doc.splitTextToSize(apiResponse, 180);
         doc.text(wrappedText, 10, 30); // Adjust the y-coordinate to space out the content
         doc.save('JobDescription.pdf');
     }
-    
 
-//     const downloadJobDescriptionAsPDF = () => {
-//     const doc = new jsPDF();
-//     doc.setFontSize(16);
-//     doc.text({desig} + ":Job Description", 10, 10);
 
-//     doc.setFontSize(12);
-//     const wrappedText = doc.splitTextToSize(apiResponse, 180);
-//     doc.text(wrappedText, 10, 30); // Adjust the y-coordinate to space out the content
-//     doc.save('JobDescription.pdf');
-// };
+    //     const downloadJobDescriptionAsPDF = () => {
+    //     const doc = new jsPDF();
+    //     doc.setFontSize(16);
+    //     doc.text({desig} + ":Job Description", 10, 10);
+
+    //     doc.setFontSize(12);
+    //     const wrappedText = doc.splitTextToSize(apiResponse, 180);
+    //     doc.text(wrappedText, 10, 30); // Adjust the y-coordinate to space out the content
+    //     doc.save('JobDescription.pdf');
+    // };
 
     //Fetch API
     const fetchJobDescription = async () => {
@@ -185,11 +212,7 @@ const JobDescription = ({ className }) => {
                                 editable={true}
                                 clearAll={false}
                                 tags={tags}
-                            />
-
-
-
-                        </div>
+                            /> </div>
 
 
                         <button
@@ -206,74 +229,93 @@ const JobDescription = ({ className }) => {
                 <div className={styles.col}>
                     <Card
                         className={cn(styles.card, className)}
-                        title="Results"
+                        title="Generated JD"
                         classTitle="title-red"
-                        head={
-                            <>
-                                <button
-                                    className={cn("button button-small mr-10", styles.button)}
-                                    onClick={downloadJobDescription}
-                                >
-                                    <Icon name="edit" size="24" />
-                                    <span>Open in editor</span>
-                                </button>
-                                <button
-                                    className={cn("button button-small", styles.button)}
-                                    onClick={downloadJobDescriptionAsPDF}
-                                >
-                                    <Icon name="upload" size="24" /> {/* Assuming you have a PDF icon */}
-                                    <span>Export as PDF</span>
-                                </button>
-                            </>
+                    // head={
+                    //     <>
+                    //         <button
+                    //             className={cn("button button-small mr-10", styles.button)}
+                    //             onClick={downloadJobDescription}
+                    //         >
+                    //             <Icon name="edit" size="24" />
+                    //             <span>Open in editor</span>
+                    //         </button>
+                    //         <button
+                    //             className={cn("button button-small", styles.button)}
+                    //             onClick={downloadJobDescriptionAsPDF}
+                    //         >
+                    //             <Icon name="upload" size="24" /> {/* Assuming you have a PDF icon */}
+                    //             <span>Export as PDF</span>
+                    //         </button>
+                    //     </>
 
 
-                        }
+                    // }
 
                     >
 
 
-                        <div className={styles.nav}>
-                            {navigation.map((x, index) => (
-                                <button
-                                    className={cn(styles.link, {
-                                        [styles.active]: index === activeIndex,
-                                    })}
-                                    onClick={() => setActiveIndex(index)}
-                                    key={index}
-                                >
-                                    {x}
-                                </button>
-                            ))}
-                        </div>
-                        <div className={styles.wrap}>
-                            {activeIndex === 0 && (
-                                <>
-                                    <div className={cn(styles.results)}>
-                                        <div className={styles.title}>
-                                            Job Description: {desig}
-                                        </div>
-                                        <div className={styles.subTitle}>
-                                            Position Overview:
-                                        </div>
-                                        <div className={styles.content}>
-                                            {apiResponse}
-                                        </div>
 
+                        <div className={styles.wrap}>
+
+                            <>
+                                <div className={cn(styles.results)}>
+                                    <div className={styles.title}>
+                                        Job Description: {desig}
+                                    </div>
+                                    <div className={styles.subTitle}>
+                                        Position Overview:
+                                    </div>
+                                    <div className={styles.content}>
+                                        {apiResponse}
                                     </div>
 
+                                </div>
 
 
-                                </>
-                            )}
-                            {activeIndex === 1 && (
-                                <>
-                                    <Candidates />
-                                </>
-                            )}
+
+                            </>
+
+                        </div>
+                        <div className={styles.btnGroup}>
+                        <button
+                                className={cn("button-stroke button-small mr-10", styles.button)}
+                                onClick={downloadJobDescription}
+                            >
+                                <Icon name="edit" size="24" />
+                                <span>Regenerate</span>
+                            </button>
+                            <button
+                                className={cn("button-stroke button-small mr-10", styles.button)}
+                                onClick={downloadJobDescription}
+                            >
+                                <Icon name="check" size="24" />
+                                <span>Save</span>
+                            </button>
+
+                            <button
+                                className={cn("button button-small mr-10", styles.button)}
+                                onClick={downloadJobDescription}
+                            >
+                                {/* <Icon name="edit" size="24" /> */}
+                                <span>Publish</span>
+                            </button>
                         </div>
                     </Card>
                 </div>
             </div>
+            <Card className={cn(styles.card, 'mt-10')}>
+
+                <Slider className="candidate-slider" {...settings}>
+                    <div className={styles.flexRow}><img src="/images/content/product-pic-2.jpg" /> <div className={styles.score}><img src="/images/score.png" width="17" />87</div></div>
+                    <div><img src="/images/content/product-pic-1.jpg" /></div>
+                    <div><img src="/images/content/product-pic-3.jpg" /></div>
+                    <div><img src="/images/content/product-pic-2.jpg" /></div>
+                    <div><img src="/images/content/product-pic-1.jpg" /></div>
+                    <div><img src="/images/content/product-pic-3.jpg" /></div>
+                </Slider>
+
+            </Card>
             <TooltipGlodal />
         </>
     );
