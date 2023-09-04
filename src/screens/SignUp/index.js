@@ -41,7 +41,7 @@ const SignUp = () => {
           </div>
         </div>
         <div className={styles.wrapper}>
-          <div className={cn("h2", styles.title)}>Sign up</div>
+          <div className={cn("h2", styles.title)}> {visible ? 'Sign up' :'Company Information'}</div>
           {visible ? <Entry onConfirm={() => setVisible(false)} /> : <Code />}
         </div>
       </div>

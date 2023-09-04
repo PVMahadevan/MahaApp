@@ -7,10 +7,12 @@
 .fieldset
     display: flex
     margin: 0 -6px
+    flex-direction: column
+    gap:24px
 
 .field
-    flex: 0 0 calc(25% - 12px)
-    width: calc(25% - 12px)
+    // flex: 0 0 calc(25% - 12px)
+    // width: calc(25% - 12px)
     margin: 0 6px
     &.error
         .input
@@ -49,7 +51,7 @@
 
 .button
     width: 100%
-    margin-top: 12px
+    margin-top: 20px
     .loader
         display: none
         margin-right: 16px
@@ -58,3 +60,23 @@
     margin-top: 32px
     +body2-s
     color: $shades1
+.textarea
+    width: 100%
+    padding: 10px
+    min-height: 150px
+    border-radius: 12px
+    border: 2px solid transparent
+    background: $n3
+    +inter
+    font-size: 15px
+    font-weight: 600
+    color: $n7
+    transition: all .2s
+    &:focus
+        border-color: $shades1
+        background: $n
+    +dark
+        background: $n6
+        color: $n1
+        &:focus
+            background: transparent
