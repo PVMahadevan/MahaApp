@@ -9,10 +9,20 @@ import History from "./screens/History";
 import Interview360 from "./screens/Interview360";
 
 function App() {
+    
     return (
         <Routes>
             <Route path="/">
                 <Route
+                    index
+                    element={
+                        <Page title="">
+                            <JobDescription />
+                        </Page>
+                    
+                    }
+                />
+                 <Route
                     index
                     path="roleforgejd/jd"
                     element={
