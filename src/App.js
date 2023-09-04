@@ -7,6 +7,8 @@ import MessageCenter from "./screens/MessageCenter";
 import Candidates from "./screens/Candidates";
 import History from "./screens/History";
 import Interview360 from "./screens/Interview360";
+import SignUp from "./screens/SignUp";
+import SignIn from "./screens/SignIn";
 
 function App() {
     
@@ -67,7 +69,8 @@ function App() {
                         </Page>
                     }
                 />
-               
+                   <Route path="sign-up" element={<SignUp />} />
+                <Route path="sign-in" element={<SignIn />} />
             </Route>
         </Routes>
     );
