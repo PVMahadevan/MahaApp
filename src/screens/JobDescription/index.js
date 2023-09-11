@@ -131,26 +131,20 @@ const JobDescription = ({ className }) => {
     //Fetch API
     const fetchJobDescription = async () => {
         try {
-            const response = await fetch("http://216.48.187.144:8000/v1/chat/completions", {
+            const response = await fetch("http://localhost:3001/v1/bud/job-description", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: "bud-v0.2",
-                    token: "4096",
-                    messages: [
-                        {
-                            role: "user",
-                            content: `Instruction: The generated content should have a bit of details about Accubits in the beginning , Instruction: The task is to create a job description that includes Roles & Responsibilities, Experience Requirement, Benefits & Package, Qualifications, and also define KPIs for the respective role ${desig}. Instruction: You should also consider ${JSON.stringify(tags)} while creating Job Description. Instruction: Also, Generate a few industry standard keywords for the mentioned role ${desig}.`,
-                        }
-                    ]
+                    role: desig,
+                    tags,
                 }),
             });
 
-            const data = await response.json();
-            setApiResponse(data.choices[0].message.content);
-            console.log("API response:", data);
+            const body = await response.json();
+            setApiResponse(body.data);
+            console.log("API response:", body.data);
         } catch (error) {
             console.error("Error fetching job description:", error);
         }
