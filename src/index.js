@@ -6,6 +6,7 @@ import App from "./App";
 import Keycloak from 'keycloak-js'
 import { keycloakConfig } from "./keycloak";
 import KeycloakContext from "./keycloakContext";
+import { Toaster } from "react-hot-toast";
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -20,7 +21,7 @@ function Root({
     const keycloak = new Keycloak(keycloakConfig)
 
     useEffect(() => {
-        keycloak.init({ enableLogging: true, flow: 'implicit', })
+        keycloak.init({ enableLogging: true, flow: 'implicit' })
         .then((authenticated) => {
             setKeycloak(keycloak)
             if (authenticated) {
@@ -42,6 +43,10 @@ function Root({
 
     return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo }}>
         <App/>
+        <Toaster   
+        toastOptions={{
+  }}
+/>
     </KeycloakContext.Provider>
 }
 

@@ -9,6 +9,7 @@ export const keycloakConfig = {
     onLoad: 'login-required'
 }
 
+
 if (!keycloak) {
     keycloak = new Keycloak(keycloakConfig)
 }

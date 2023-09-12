@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 import Candidates from "./Candidates";
 import { jsPDF } from "jspdf";
 import Slider from "react-slick";
-import api from "../../services/api";
-import { createJobDescription } from "../../services/job-description";
+import api from "../../services/custom/api";
+import { createJobDescription } from "../../services/jobs";
 
 
 
