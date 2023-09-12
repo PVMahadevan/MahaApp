@@ -21,7 +21,9 @@ function Root({
     const keycloak = new Keycloak(keycloakConfig)
 
     useEffect(() => {
-        keycloak.init({ enableLogging: true, flow: 'implicit' })
+        keycloak.init({ enableLogging: true, flow: 'implicit', 
+        // onLoad:'login-required'
+     })
         .then((authenticated) => {
             setKeycloak(keycloak)
             if (authenticated) {
