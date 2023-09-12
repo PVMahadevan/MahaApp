@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./User.module.sass";
 import Icon from "../../Icon";
+import KeycloakContext from "../../../keycloakContext";
 
 const User = (props) => {
     const { className } = props;
+    const { keycloakInstance, authenticated } = useContext(KeycloakContext)
     const navigate = useNavigate();
     const onLogoutClick = () => {
-        console.log(props)
-        // navigate('/sign-in');
+        if(authenticated){
+            keycloakInstance.logout()
+        }
+        navigate('/sign-in');
     }
 
     const items = [

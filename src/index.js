@@ -20,11 +20,11 @@ function Root({
     const keycloak = new Keycloak(keycloakConfig)
 
     useEffect(() => {
-        keycloak.init({ onLoad: 'login-required', enableLogging: true, flow: 'implicit' }).then((authenticated) => {
+        keycloak.init({ enableLogging: true, flow: 'implicit', })
+        .then((authenticated) => {
+            setKeycloak(keycloak)
             if (authenticated) {
                 setAuthenticated(authenticated)
-                setKeycloak(keycloak)
-
                 const local_storage = {
                     token: keycloak.token,
                     user: keycloak.tokenParsed
