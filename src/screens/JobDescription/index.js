@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import Candidates from "./Candidates";
 import { jsPDF } from "jspdf";
 import Slider from "react-slick";
+import api from "../../services/api";
+import { createJobDescription } from "../../services/job-description";
 
 
 
@@ -130,24 +132,16 @@ const JobDescription = ({ className }) => {
 
     //Fetch API
     const fetchJobDescription = async () => {
-        try {
-            const response = await fetch("http://localhost:3001/v1/bud/job-description", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    role: desig,
-                    tags,
-                }),
-            });
-
-            const body = await response.json();
-            setApiResponse(body.data);
-            console.log("API response:", body.data);
-        } catch (error) {
+        const [error, result] = await createJobDescription({
+            role: desig,
+            tags,
+        });
+        if (error) {
             console.error("Error fetching job description:", error);
+            alert('Error while creating JD')
+            return
         }
+        setApiResponse(result.data);
     };
 
     return (
@@ -272,7 +266,7 @@ const JobDescription = ({ className }) => {
 
                         </div>
                         <div className={styles.btnGroup}>
-                        <button
+                            <button
                                 className={cn("button-stroke button-small mr-10", styles.button)}
                                 onClick={downloadJobDescription}
                             >
