@@ -1,66 +1,73 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./User.module.sass";
 import Icon from "../../Icon";
 
-const items = [
-    {
-        menu: [
-            {
-                title: "Profile",
-                url: "/shop",
-            },
-            {
-                title: "Edit profile",
-                url: "/settings",
-            },
-        ],
-    },
-    {
-        menu: [
-            {
-                title: "Analytics",
-                icon: "bar-chart",
-                url: "/customers/overview",
-            },
-            {
-                title: "Affiliate center",
-                icon: "ticket",
-                url: "/affiliate-center",
-            },
-            {
-                title: "Explore creators",
-                icon: "grid",
-                url: "/explore-creators",
-            },
-        ],
-    },
-    {
-        menu: [
-            {
-                title: "Upgrade to Pro",
-                icon: "leaderboard",
-                color: true,
-                url: "/upgrade-to-pro",
-            },
-        ],
-    },
-    {
-        menu: [
-            {
-                title: "Account settings",
-                url: "/settings",
-            },
-            {
-                title: "Log out",
-            },
-        ],
-    },
-];
+const User = (props) => {
+    const { className } = props;
+    const navigate = useNavigate();
+    const onLogoutClick = () => {
+        console.log(props)
+        // navigate('/sign-in');
+    }
 
-const User = ({ className }) => {
+    const items = [
+        {
+            menu: [
+                {
+                    title: "Profile",
+                    url: "/shop",
+                },
+                {
+                    title: "Edit profile",
+                    url: "/settings",
+                },
+            ],
+        },
+        {
+            menu: [
+                {
+                    title: "Analytics",
+                    icon: "bar-chart",
+                    url: "/customers/overview",
+                },
+                {
+                    title: "Affiliate center",
+                    icon: "ticket",
+                    url: "/affiliate-center",
+                },
+                {
+                    title: "Explore creators",
+                    icon: "grid",
+                    url: "/explore-creators",
+                },
+            ],
+        },
+        {
+            menu: [
+                {
+                    title: "Upgrade to Pro",
+                    icon: "leaderboard",
+                    color: true,
+                    url: "/upgrade-to-pro",
+                },
+            ],
+        },
+        {
+            menu: [
+                {
+                    title: "Account settings",
+                    url: "/settings",
+                },
+                {
+                    title: "Log out",
+                    click: onLogoutClick
+                },
+            ],
+        },
+    ];
     const [visible, setVisible] = useState(false);
     const { pathname } = useLocation();
 
@@ -99,7 +106,12 @@ const User = ({ className }) => {
                                 ) : (
                                     <button
                                         className={styles.item}
-                                        onClick={() => setVisible(false)}
+                                        onClick={() => {
+                                            setVisible(false)
+                                            if (x.click) {
+                                                x.click();
+                                            }
+                                        }}
                                         key={index}
                                     >
                                         {x.title}
