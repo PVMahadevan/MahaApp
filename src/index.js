@@ -22,7 +22,7 @@ function Root({
 
     useEffect(() => {
         keycloak.init({ enableLogging: true, flow: 'implicit', 
-        // onLoad:'login-required'
+        onLoad:'login-required'
      })
         .then((authenticated) => {
             setKeycloak(keycloak)
