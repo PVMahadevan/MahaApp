@@ -1,0 +1,6 @@
+services:
+    maha_app:
+        build:
+            context: .
+        ports:
+          - "4444:3000"
