@@ -3,10 +3,12 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
-import Keycloak from 'keycloak-js'
-import { keycloakConfig } from "./keycloak";
 import KeycloakContext from "./keycloakContext";
 import { Toaster } from "react-hot-toast";
+import authApi from "./services/custom/authApi";
+import { getUserInfo } from "./services/authentication";
+import api from "./services/custom/api";
+import { getAuthorizationHeader } from "./utils/token";
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -15,42 +17,37 @@ const root = createRoot(container)
 function Root({
     children
 }) {
-    const [keycloakInstance, setKeycloak] = useState(null)
+    const [loading, setLoading] = useState(false)
     const [authenticated, setAuthenticated] = useState(false)
     const [userInfo, setUserInfo] = useState(null)
-    const keycloak = new Keycloak(keycloakConfig)
 
-    const updateToken = ()=>{
-       setAuthenticated(keycloakInstance.authenticated);
+    const checkLogin = async () => {
+        authApi.defaults.headers.Authorization = getAuthorizationHeader()
+        api.defaults.headers.Authorization = getAuthorizationHeader()
+
+        const [error, userInfo] = await getUserInfo();
+        console.log(error, userInfo)
+        setUserInfo(userInfo);
+        setAuthenticated(!error);
     }
 
     useEffect(() => {
-        keycloak.init({ enableLogging: true, flow: 'implicit'})
-        .then((authenticated) => {
-            setKeycloak(keycloak)
-            if (authenticated) {
-                setAuthenticated(authenticated)
-                const local_storage = {
-                    token: keycloak.token,
-                    user: keycloak.tokenParsed
-                }
-
-                setUserInfo(keycloak.tokenParsed)
-                localStorage.setItem('ta-auth', JSON.stringify(local_storage))
-
-                console.log('keycloak', keycloak)
-            }
-        })
+        console.log('loading')
+        setLoading(true);
+        checkLogin().finally(() => {
+        console.log('done')
+        setLoading(false);
+        });
     }, [])
 
-    if (!keycloakInstance) return <>Loading...</> // or render a loading state
+    if (loading) return <>Loading...</> // or render a loading state
 
-    return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo, updateToken }}>
-        <App/>
-        <Toaster   
-        toastOptions={{
-  }}
-/>
+    return <KeycloakContext.Provider value={{ authenticated, userInfo, checkLogin }}>
+        <App />
+        <Toaster
+            toastOptions={{
+            }}
+        />
     </KeycloakContext.Provider>
 }
 
