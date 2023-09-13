@@ -8,11 +8,12 @@ import KeycloakContext from "../../../keycloakContext";
 
 const User = (props) => {
     const { className } = props;
-    const { keycloakInstance, authenticated } = useContext(KeycloakContext)
+    const { keycloakInstance, authenticated, checkLogin } = useContext(KeycloakContext)
     const navigate = useNavigate();
     const onLogoutClick = () => {
         if(authenticated){
-            keycloakInstance.logout()
+           localStorage.clear();
+           checkLogin();
         }
         navigate('/sign-in');
     }
