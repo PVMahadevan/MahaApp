@@ -20,8 +20,12 @@ function Root({
     const [userInfo, setUserInfo] = useState(null)
     const keycloak = new Keycloak(keycloakConfig)
 
+    const updateToken = ()=>{
+       setAuthenticated(keycloakInstance.authenticated);
+    }
+
     useEffect(() => {
-        keycloak.init({ enableLogging: true, flow: 'implicit' })
+        keycloak.init({ enableLogging: true, flow: 'implicit'})
         .then((authenticated) => {
             setKeycloak(keycloak)
             if (authenticated) {
@@ -41,7 +45,7 @@ function Root({
 
     if (!keycloakInstance) return <>Loading...</> // or render a loading state
 
-    return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo }}>
+    return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo, updateToken }}>
         <App/>
         <Toaster   
         toastOptions={{

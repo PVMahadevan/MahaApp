@@ -14,7 +14,7 @@ import { toast } from "react-hot-toast";
 const SignIn = () => {
   const heightWindow = use100vh();
   const [error, setError] = useState('')
-  const { keycloakInstance, authenticated } = useContext(KeycloakContext)
+  const { keycloakInstance, authenticated, updateToken } = useContext(KeycloakContext)
   const navigate = useNavigate();
 
   const onLoginSubmit = async (values, { setSubmitting }) => {
@@ -27,9 +27,10 @@ const SignIn = () => {
     const [error, result] = await login(params)
     setSubmitting(false);
     if (!error) {
-      keycloakInstance.idToken = result.access_token;
+      keycloakInstance.token = result.access_token;
       keycloakInstance.refreshToken = result.refresh_token;
       await keycloakInstance.updateToken(1);
+      updateToken();
       if (keycloakInstance.authenticated) {
         toast.success('Logged in successfully')
         navigate('/');

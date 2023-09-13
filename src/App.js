@@ -15,7 +15,6 @@ import KeycloakContext from "./keycloakContext";
 function App() {
     const { keycloakInstance, authenticated } = useContext(KeycloakContext)
     if (authenticated) {
-
         return (
             <Routes>
                 <Route path="/">
