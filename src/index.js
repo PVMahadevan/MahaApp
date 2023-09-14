@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
-import Keycloak from 'keycloak-js'
-import { keycloakConfig } from "./keycloak";
+import keycloak from "./keycloak";
 import KeycloakContext from "./keycloakContext";
 import { Toaster } from "react-hot-toast";
 import api, { getAuthorizationHeader } from "./services/custom/api";
@@ -19,7 +18,6 @@ function Root({
     const [keycloakInstance, setKeycloak] = useState(null)
     const [authenticated, setAuthenticated] = useState(false)
     const [userInfo, setUserInfo] = useState(null)
-    const keycloak = new Keycloak(keycloakConfig)
 
     useEffect(() => {
         keycloak.init({ enableLogging: true, flow: 'implicit', 
