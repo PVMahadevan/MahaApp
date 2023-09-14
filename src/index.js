@@ -7,6 +7,7 @@ import Keycloak from 'keycloak-js'
 import { keycloakConfig } from "./keycloak";
 import KeycloakContext from "./keycloakContext";
 import { Toaster } from "react-hot-toast";
+import api, { getAuthorizationHeader } from "./services/custom/api";
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -26,6 +27,7 @@ function Root({
      })
         .then((authenticated) => {
             setKeycloak(keycloak)
+            api.defaults.headers = { Authorization: getAuthorizationHeader() }
             if (authenticated) {
                 setAuthenticated(authenticated)
                 const local_storage = {
