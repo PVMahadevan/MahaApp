@@ -72,6 +72,14 @@ function App() {
                             </Page>
                         }
                     />
+                    <Route
+                        path="roleforgejd/editor/:id"
+                        element={
+                            <Page title="">
+                                <History />
+                            </Page>
+                        }
+                    />
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
