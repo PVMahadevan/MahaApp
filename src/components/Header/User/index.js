@@ -12,6 +12,7 @@ const User = (props) => {
     const navigate = useNavigate();
     const onLogoutClick = () => {
         if(authenticated){
+            localStorage.clear();
             keycloakInstance.logout()
         }
         navigate('/sign-in');

@@ -5,6 +5,8 @@ import File from "../../components/File";
 import Card from "../../components/Card";
 import Icon from "../../components/Icon";
 import { Link } from "react-router-dom";
+import { uploadResume } from "../../services/candidates";
+import toast from "react-hot-toast";
 
 const navigation = ["Technical proficiency", "Continuous learning", "C&I", "Leadership", "Problem solving", "Communication", "Adaptability & flexibility"];
 const navigationData = [
@@ -68,49 +70,97 @@ const navigationData = [
 ];
 const Interview360 = ({ className }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [selectedFile, setSelectedFile] = useState();
+    const [parsedData, setParsedData]  = useState('')
     const [showParsedContainer, setShowParsedContainer] = useState(true);
-    const handleGenerateQuestions = () => {
-        setShowParsedContainer(!showParsedContainer);
+    const handleParseClick = async () => {
+        // setShowParsedContainer(!showParsedContainer);
+        const formData = new FormData();
+
+        // Update the formData object
+        formData.append(
+            "file",
+            selectedFile,
+            selectedFile.name
+        );
+
+        // Details of the uploaded file
+        console.log(selectedFile);
+
+        // Request made to the backend api
+        // Send formData object
+        const [error, result] = await uploadResume(formData)
+        if(error){
+        toast.success('File upload failed')
+        return;
+        }
+        setParsedData(result.data?.html)
+        setShowParsedContainer(true);
+        toast.success('File parsed successfully')
+
     };
     const handleButtonClick = (index) => {
         setActiveIndex(index);
     };
+
+    const handleClear = ()=>{
+        setSelectedFile(null)
+    }
+
+    const handleFileUpload = (event) => {
+        setSelectedFile(event.target.files[0]);
+        console.log(event.target.files[0])
+    }
+
     return (
         <div className={styles.row}>
             {showParsedContainer && (
-            <div className={styles.left}>
-                <Card
-                    className={cn(styles.card, className)}
-                    title="Upload resume"
-                    classTitle="title-green"
-                >
-                    <File
-                        className={styles.field}
-                        title="Upload or drop resume"
-                        label=""
-                        tooltip="Maximum 1MB file. PDF & DOC are allowed"
-                    />
-                    <button
-                        type="submit"
-                        className={cn("button", styles.button)}
-                        onClick={handleGenerateQuestions}
+                <div className={styles.left}>
+                    <Card
+                        className={cn(styles.card, className)}
+                        title="Upload resume"
+                        classTitle="title-green"
                     >
-                        <Icon name="magic-wand" size="22" />
-                        Parse resume
-                    </button>
-                </Card>
-            </div>
-              )}
+                        <File
+                            selected={selectedFile}
+                            className={styles.field}
+                            title="Upload or drop resume"
+                            tooltip="Maximum 1MB file. PDF & DOC are allowed"
+                            handleFileUpload={handleFileUpload}
+                        />
+                        {selectedFile && 
+                        <button
+                            type="button"
+                            className={cn("button-stroke-red", styles.button)}
+                            onClick={handleClear}
+                            disabled={!selectedFile}
+                        >
+                            Clear Selection
+                        </button>}
+                        <button
+                            type="button"
+                            className={cn("button", styles.button)}
+                            onClick={handleParseClick}
+                            disabled={!selectedFile}
+                        >
+                            <Icon name="magic-wand" size="22" />
+                            Parse resume
+                        </button>
+                    </Card>
+                </div>
+            )}
             <div className={styles.right}>
-                {showParsedContainer && (
+                {showParsedContainer ? parsedData && (
                     <Card
                         className={cn(styles.card, className)}
                         title="Parsed details"
                         classTitle="title-blue"
                     >
 
-                        <div className={styles.parsedcontainer}>
-                            <div className={cn(styles.results)}>
+                        <div className={styles.parsedcontainer} dangerouslySetInnerHTML={{
+                            __html: parsedData
+                        }}>
+                            {/* <div className={cn(styles.results)}>
                                 <div className={styles.title}>
                                     Experience
                                 </div>
@@ -200,13 +250,12 @@ const Interview360 = ({ className }) => {
                                 <div className={styles.content}>
                                     I am a highly motivated and creative Content Writer with over 5 years of experience in creating engaging content for various digital platforms. I have a strong passion for storytelling and a proven track record of driving organic traffic through SEO-optimized content. My ability to adapt to different writing styles and effectively communicate complex ideas sets me apart in the field.
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
 
                     </Card>
-                )}
-                {!showParsedContainer && (
+                ): (
                     <Card
                         className={cn(styles.card, className)}
                         title="Questions"
@@ -214,7 +263,9 @@ const Interview360 = ({ className }) => {
                         head={
                             <Link
                                 className={cn("button-stroke button-small", styles.button)}
-                                onClick={handleGenerateQuestions}
+                                onClick={()=>{
+                                    setShowParsedContainer(false)
+                                }}
                             >
                                 <Icon name="arrow-left" size="24" />
                                 <span>Back</span>
@@ -222,77 +273,31 @@ const Interview360 = ({ className }) => {
                         }
                     >
                         <div className={styles.questioncontainer}>
-
-                            {/* <div className={styles.nav}>
-                                {navigation.map((x, index) => (
+                            <div className={styles.nav}>
+                                {navigationData.map((section, index) => (
                                     <button
+                                        key={index}
                                         className={cn(styles.link, {
                                             [styles.active]: index === activeIndex,
                                         })}
-                                        onClick={() => setActiveIndex(index)}
-                                        key={index}
+                                        onClick={() => handleButtonClick(index)}
                                     >
-                                        {x}
+                                        {section.label}
                                     </button>
                                 ))}
                             </div>
-                            <div className={styles.wrap}>
-                                {activeIndex === 0 && (
-                                    <>
-                                        <div className={cn(styles.results)}>
-                                            <div className={styles.title}>
-                                               Technical Proficiency
-                                            </div>
-                                            <div className={styles.subTitle}>
-                                                Position Overview:
-                                            </div>
-                                            <div className={styles.content}>
 
-                                            </div>
-
-                                        </div>
-
-
-
-                                    </>
-                                )}
-                                {activeIndex === 1 && (
-                                    <>
-                                        <div className={cn(styles.results)}>
-
-
-                                        </div>
-
-
-
-                                    </>
-                                )}
-                            </div> */}
-                              <div className={styles.nav}>
-                {navigationData.map((section, index) => (
-                    <button
-                        key={index}
-                        className={cn(styles.link, {
-                            [styles.active]: index === activeIndex,
-                        })}
-                        onClick={() => handleButtonClick(index)}
-                    >
-                        {section.label}
-                    </button>
-                ))}
-            </div>
-
-            <div className={cn(styles.results)}>
-                <div className={styles.title}>
-                    {navigationData[activeIndex].content.title}
-                </div>
-                <div className={styles.subTitle}>
-                    {navigationData[activeIndex].content.subTitle}
-                </div>
-                <div className={styles.content}>
-                    {navigationData[activeIndex].content.details}
-                </div>
-            </div>
+                            <div className={cn(styles.results)}>
+                                <div className={styles.title}>
+                                    {navigationData[activeIndex].content.title}
+                                </div>
+                                <div className={styles.subTitle}>
+                                    {navigationData[activeIndex].content.subTitle}
+                                </div>
+                                <div className={styles.content}>
+                                    {navigationData[activeIndex].content.details}
+                                </div>
+                            </div>
                         </div>
                     </Card>
                 )}
