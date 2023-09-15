@@ -22,35 +22,38 @@ function Root({
     const keycloak = new Keycloak(keycloakConfig)
 
     useEffect(() => {
-        keycloak.init({ enableLogging: true, flow: 'implicit', 
-        onLoad:'login-required'
-     })
-        .then((authenticated) => {
-            setKeycloak(keycloak)
-            api.defaults.headers = { Authorization: getAuthorizationHeader() }
-            if (authenticated) {
-                setAuthenticated(authenticated)
-                const local_storage = {
-                    token: keycloak.token,
-                    user: keycloak.tokenParsed
-                }
-
-                setUserInfo(keycloak.tokenParsed)
-                localStorage.setItem('ta-auth', JSON.stringify(local_storage))
-
-                console.log('keycloak', keycloak)
+        const setToken = () => {
+            const local_storage = {
+                token: keycloak.token,
+                user: keycloak.tokenParsed
             }
+
+            setUserInfo(keycloak.tokenParsed)
+            localStorage.setItem('ta-auth', JSON.stringify(local_storage))
+            api.defaults.headers = { Authorization: getAuthorizationHeader(keycloak.token) }
+        }
+        keycloak.init({
+            enableLogging: true, flow: 'implicit',
+            onLoad: 'login-required'
         })
+            .then((authenticated) => {
+                setKeycloak(keycloak)
+                console.log(keycloak.tokenParsed);
+                if (authenticated) {
+                    setAuthenticated(authenticated)
+                    setToken()
+                }
+            })
     }, [])
 
     if (!keycloakInstance) return <>Loading...</> // or render a loading state
 
     return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo }}>
-        <App/>
-        <Toaster   
-        toastOptions={{
-  }}
-/>
+        <App />
+        <Toaster
+            toastOptions={{
+            }}
+        />
     </KeycloakContext.Provider>
 }
 

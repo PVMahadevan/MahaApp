@@ -18,7 +18,7 @@ export const getToken = () => {
   return authInfo?.token;
 }
 
-export const getAuthorizationHeader = () => `Bearer ${getToken()}`;
+export const getAuthorizationHeader = (token) => `Bearer ${token || getToken()}`;
 
 export const api = axios.create({
   baseURL,
