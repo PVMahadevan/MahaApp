@@ -12,6 +12,7 @@ import { jsPDF } from "jspdf";
 import Slider from "react-slick";
 import api from "../../services/custom/api";
 import { createJobDescription } from "../../services/jobs";
+import toast from "react-hot-toast";
 
 
 
@@ -138,10 +139,11 @@ const JobDescription = ({ className }) => {
         });
         if (error) {
             console.error("Error fetching job description:", error);
-            alert('Error while creating JD')
+            toast.error('Errored while creating Job Description')
             return
         }
-        setApiResponse(result.data);
+            toast.error('Created Job Description successfully')
+            setApiResponse(result.data);
     };
 
     return (
