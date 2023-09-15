@@ -11,6 +11,7 @@ import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import { useContext } from "react";
 import KeycloakContext from "./keycloakContext";
+import useDarkMode from "use-dark-mode";
 
 function App() {
     const { authenticated } = useContext(KeycloakContext)

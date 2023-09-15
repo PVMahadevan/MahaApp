@@ -5,7 +5,7 @@ import useDarkMode from "use-dark-mode";
 import Icon from "../Icon";
 
 const Theme = ({ className, visibleSidebar }) => {
-  const darkMode = useDarkMode(false);
+  const darkMode = useDarkMode(true);
 
   return (
     <label

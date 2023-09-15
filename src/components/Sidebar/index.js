@@ -148,26 +148,27 @@ const Sidebar = ({ className, onClose }) => {
                 <div className={styles.foot}>
                     <button
                         className={styles.link}
-                        // onClick={() => setVisibleHelp(true)}
+                    // onClick={() => setVisibleHelp(true)}
                     >
                         {/* <Icon name="help" size="24" /> */}
                         About Us
-                        
+
                     </button>
                     <button
                         className={styles.link}
                     >
                         Privacy Policy
-                        
+
                     </button>
-                    <button
+                    <Link
+                        to={'/'}
                         className={styles.link}
                     >
                         Back to home
-                        
-                    </button>
-                    <hr/>
-                    <Theme className={styles.theme} visibleSidebar={visible} />
+
+                    </Link>
+                    {/* <hr/> */}
+                    {/* <Theme className={styles.theme} visibleSidebar={visible} /> */}
                 </div>
             </div>
             <Help

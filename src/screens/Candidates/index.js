@@ -190,12 +190,6 @@ const Candidates = () => {
 
   return (
     <div className={cn(styles.wrapper, { [styles.active]: visible })}>
-
-
-
-
-
-
       <Users
        onSelectUser={(user) => {
         console.log("Selected user:", user);

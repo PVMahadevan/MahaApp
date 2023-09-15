@@ -8,6 +8,7 @@ import { keycloakConfig } from "./keycloak";
 import KeycloakContext from "./keycloakContext";
 import { Toaster } from "react-hot-toast";
 import api, { getAuthorizationHeader } from "./services/custom/api";
+import useDarkMode from "use-dark-mode";
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -20,8 +21,9 @@ function Root({
     const [authenticated, setAuthenticated] = useState(false)
     const [userInfo, setUserInfo] = useState(null)
     const keycloak = new Keycloak(keycloakConfig)
-
+    const darkMode = useDarkMode(false);
     useEffect(() => {
+        darkMode.disable();
         const setToken = () => {
             const local_storage = {
                 token: keycloak.token,
