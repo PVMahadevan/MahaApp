@@ -13,6 +13,8 @@ import Slider from "react-slick";
 import api from "../../services/custom/api";
 import { createJobDescription } from "../../services/jobs";
 import toast from "react-hot-toast";
+import { getMatchingResume } from "../../services/candidates";
+import Users from "../MessageCenter/Users";
 
 
 
@@ -52,7 +54,7 @@ const JobDescription = ({ className }) => {
             },
         ],
     };
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [users, setUsers] = useState([]);
     const [desig, setDesig] = useState();
     const [tags, setTags] = useState([]);
     const [apiResponse, setApiResponse] = useState(null);
@@ -119,6 +121,14 @@ const JobDescription = ({ className }) => {
         doc.save('JobDescription.pdf');
     }
 
+    const viewMatchingCandidates = async ()=>{
+        const [error, result] = await getMatchingResume({
+            jobDescription: apiResponse
+        })
+        console.log(error, result);
+        setUsers(result);
+    }
+
 
     //     const downloadJobDescriptionAsPDF = () => {
     //     const doc = new jsPDF();
@@ -142,7 +152,7 @@ const JobDescription = ({ className }) => {
             toast.error('Errored while creating Job Description')
             return
         }
-            toast.error('Created Job Description successfully')
+            toast.success('Created Job Description successfully')
             setApiResponse(result.data);
     };
 
@@ -221,26 +231,6 @@ const JobDescription = ({ className }) => {
                         className={cn(styles.card, className)}
                         title="Generated JD"
                         classTitle="title-red"
-                    // head={
-                    //     <>
-                    //         <button
-                    //             className={cn("button button-small mr-10", styles.button)}
-                    //             onClick={downloadJobDescription}
-                    //         >
-                    //             <Icon name="edit" size="24" />
-                    //             <span>Open in editor</span>
-                    //         </button>
-                    //         <button
-                    //             className={cn("button button-small", styles.button)}
-                    //             onClick={downloadJobDescriptionAsPDF}
-                    //         >
-                    //             <Icon name="upload" size="24" /> {/* Assuming you have a PDF icon */}
-                    //             <span>Export as PDF</span>
-                    //         </button>
-                    //     </>
-
-
-                    // }
 
                     >
 
@@ -284,6 +274,14 @@ const JobDescription = ({ className }) => {
                             </button>
 
                             <button
+                                className={cn("button-stroke button-small mr-10", styles.button)}
+                                onClick={viewMatchingCandidates}
+                            >
+                                <Icon name="check" size="24" />
+                                <span>View Matching Candidates</span>
+                            </button>
+
+                            <button
                                 className={cn("button button-small mr-10", styles.button)}
                                 onClick={downloadJobDescription}
                             >
@@ -295,15 +293,26 @@ const JobDescription = ({ className }) => {
                 </div>
             </div>
             <Card className={cn(styles.card, 'mt-10')}>
-
-                <Slider className="candidate-slider" {...settings}>
+            {users?.length > 0 && <Users
+       onSelectUser={(user) => {
+        console.log("Selected user:", user);
+      }}
+        className={styles.users}
+        navigation={navigation}
+        items={users}
+        setVisible={()=>{}}
+        search={''}
+        setSearch={()=>{}}
+        onSubmit={() => {}}
+      />}
+                {/* <Slider className="candidate-slider" {...settings}>
                     <div className={styles.flexRow}><img src="/images/content/product-pic-2.jpg" /> <div className={styles.score}><img src="/images/score.png" width="17" />87</div></div>
                     <div><img src="/images/content/product-pic-1.jpg" /></div>
                     <div><img src="/images/content/product-pic-3.jpg" /></div>
                     <div><img src="/images/content/product-pic-2.jpg" /></div>
                     <div><img src="/images/content/product-pic-1.jpg" /></div>
                     <div><img src="/images/content/product-pic-3.jpg" /></div>
-                </Slider>
+                </Slider> */}
 
             </Card>
             <TooltipGlodal />

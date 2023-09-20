@@ -206,7 +206,6 @@ const Candidates = () => {
       <Users
        onSelectUser={(user) => {
         console.log("Selected user:", user);
-        // setSelectedUser(user);
       }}
         className={styles.users}
         navigation={navigation}
@@ -215,7 +214,6 @@ const Candidates = () => {
         search={search}
         setSearch={setSearch}
         onSubmit={() => handleSubmit()}
-        // onSelectUser={(user) => setSelectedUser(user)} // Set selected user
       />
 {/*       
       <Messages
