@@ -17,7 +17,6 @@ const extensions = [
 ]
 const content = '<p>Resume will Load once Parse</p>'
 
-const navigation = ["Technical proficiency", "Continuous learning", "C&I", "Leadership", "Problem solving", "Communication", "Adaptability & flexibility"];
 const navigationData = [
     {
         label: "Technical proficiency",
@@ -82,10 +81,10 @@ const Interview360 = ({ className }) => {
         extensions,
         content: content,
     })
+    const [metaData, setMetaData] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [selectedFile, setSelectedFile] = useState();
     const [parsedData, setParsedData] = useState('')
-    const [candidateName, setCandidateName] = useState('');
     const [showParsedContainer, setShowParsedContainer] = useState(true);
     const handleParseClick = async () => {
         // setShowParsedContainer(!showParsedContainer);
@@ -111,6 +110,11 @@ const Interview360 = ({ className }) => {
         }
         console.log({ result })
         const content = result?.data?.html || result?.data?.text;
+        try {
+            setMetaData(JSON.parse(result?.data?.metaData))
+        } catch (error) {
+            console.error(error)
+        }
         setParsedData(content)
         editor?.commands?.setContent(content)
         setShowParsedContainer(true);
@@ -136,7 +140,7 @@ const Interview360 = ({ className }) => {
         console.log('save resume')
         const [error, result] = await saveResume({
             content: editor.getHTML(),
-            name: candidateName,
+            ...metaData,
         })
         if (error) {
             console.log(error)
@@ -195,12 +199,78 @@ const Interview360 = ({ className }) => {
                             label="Candidate Name"
                             required
                             placeholder="Enter Candidate Name"
-                            value={candidateName}
-                            onChange={(e) => setCandidateName(e.target.value)}
-                            maxLength={100}
+                            value={metaData?.name}
+                            name='name'
+                            onChange={(e) => {
+                                setMetaData({
+                                    ...metaData, 
+                                    [e.target.name]: e.target.value,
+                                })
+                            }}
+                            maxLength={40}
+                        />
+                          <Input
+                            className={styles.field}
+                            label="Designation"
+                            required
+                            placeholder="Enter Designation"
+                            value={metaData?.designation}
+                            name='designation'
+                            onChange={(e) => {
+                                setMetaData({
+                                    ...metaData, 
+                                    [e.target.name]: e.target.value,
+                                })
+                            }}
+                            maxLength={40}
+                        />
+                          <Input
+                            className={styles.field}
+                            label="Candidate Email"
+                            required
+                            placeholder="Enter Candidate Email"
+                            value={metaData?.email}
+                            name='name'
+                            onChange={(e) => {
+                                setMetaData({
+                                    ...metaData, 
+                                    [e.target.name]: e.target.value,
+                                })
+                            }}
+                            maxLength={40}
+                        />
+                          <Input
+                            className={styles.field}
+                            label="Candidate Phone Number"
+                            required
+                            placeholder="Enter Candidate Phone"
+                            value={metaData?.phone}
+                            name='phone'
+                            onChange={(e) => {
+                                setMetaData({
+                                    ...metaData, 
+                                    [e.target.name]: e.target.value,
+                                })
+                            }}
+                            maxLength={40}
+                        />
+                          <Input
+                            className={styles.field}
+                            label="Years of Experience"
+                            required
+                            placeholder="Enter Years of Experience"
+                            value={metaData?.experience}
+                            name='experience'
+                            onChange={(e) => {
+                                setMetaData({
+                                    ...metaData, 
+                                    [e.target.name]: e.target.value,
+                                })
+                            }}
+                            maxLength={40}
                         />
                         <button
-                            disabled={!candidateName || !parsedData}
+                            disabled={!metaData || !parsedData}
                             type="button"
                             className={cn("button", styles.button)}
                             onClick={handleSaveClick}

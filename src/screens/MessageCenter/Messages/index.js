@@ -26,7 +26,7 @@ const Messages = ({
       <div className={styles.wrapper}>
       
         <div className={styles.list}>
-          {messages.map((x, index) => (
+          {messages?.map((x, index) => (
             <Message item={x} key={index} />
           ))}
         </div>

@@ -3,6 +3,7 @@ import styles from "./Candidates.module.sass";
 import cn from "classnames";
 import Users from "../MessageCenter/Users";
 import Messages from "../MessageCenter/Messages";
+import { getAllResume } from "../../services/candidates";
 
 const navigation = [
   {
@@ -119,60 +120,61 @@ const experience = [
       },
   ];
   
-const users = [
-  {
-    id: 0,
-    name: "Jarret Waelchi",
-    avatar: "/images/content/avatar-1.jpg",
-    designation: "Senior Product Designer",
-    score: "45",
-    experience: "6yr",
-    location: "Bangalore",
-    new: true,
-    online: false,
-    detail: [experience[0]],
-  },
-  {
-    id: 1,
-    name: "Orval Casper",
-    avatar: "/images/content/avatar-2.jpg",
-    designation: "Senior Product Designer",
-    score: "50",
-    experience: "4yr",
-    location: "Bangalore",
-    new: false,
-    online: true,
-    detail: [experience[1]],
-  },
-  {
-    id: 2,
-    name: "Michel Emard",
-    avatar: "/images/content/avatar-3.jpg",
-    designation: "Senior Product Designer",
-    score: "55",
-    experience: "3yr",
-    location: "Delhi",
-    new: true,
-    online: false,
-    detail: [experience[0]],
-  },
-  {
-    id: 3,
-    name: "Reuben Ward",
-    avatar: "/images/content/avatar-4.jpg",
-    designation: "Senior Product Designer",
-    score: "40",
-    experience: "7yr",
-    location: "Chennai",
-    new: false,
-    online: false,
-    detail: [experience[0]],
-  }
-];
+// const users = [
+//   {
+//     id: 0,
+//     name: "Jarret Waelchi",
+//     avatar: "/images/content/avatar-1.jpg",
+//     designation: "Senior Product Designer",
+//     score: "45",
+//     experience: "6yr",
+//     location: "Bangalore",
+//     new: true,
+//     online: false,
+//     detail: [experience[0]],
+//   },
+//   {
+//     id: 1,
+//     name: "Orval Casper",
+//     avatar: "/images/content/avatar-2.jpg",
+//     designation: "Senior Product Designer",
+//     score: "50",
+//     experience: "4yr",
+//     location: "Bangalore",
+//     new: false,
+//     online: true,
+//     detail: [experience[1]],
+//   },
+//   {
+//     id: 2,
+//     name: "Michel Emard",
+//     avatar: "/images/content/avatar-3.jpg",
+//     designation: "Senior Product Designer",
+//     score: "55",
+//     experience: "3yr",
+//     location: "Delhi",
+//     new: true,
+//     online: false,
+//     detail: [experience[0]],
+//   },
+//   {
+//     id: 3,
+//     name: "Reuben Ward",
+//     avatar: "/images/content/avatar-4.jpg",
+//     designation: "Senior Product Designer",
+//     score: "40",
+//     experience: "7yr",
+//     location: "Chennai",
+//     new: false,
+//     online: false,
+//     detail: [experience[0]],
+//   }
+// ];
 
 
 
 const Candidates = () => {
+  const [users, setUsers] = useState([]);
   const [visible, setVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
@@ -184,16 +186,27 @@ const Candidates = () => {
    useEffect(() => {
     console.log("All user:", users);
     if (users.length > 0) {
-      setSelectedUser(users[0]);
+      // setSelectedUser(users[0]);
     }
   }, [users]);
 
+  const init = async()=>{
+    const [error, result] = await getAllResume();
+    setUsers(result.data)
+  }
+
+  useEffect(()=>{
+    init();
+  },[])
+
   return (
-    <div className={cn(styles.wrapper, { [styles.active]: visible })}>
+    <div className={cn(styles.wrapper,
+    //  { [styles.active]: visible }
+     )}>
       <Users
        onSelectUser={(user) => {
         console.log("Selected user:", user);
-        setSelectedUser(user);
+        // setSelectedUser(user);
       }}
         className={styles.users}
         navigation={navigation}
@@ -204,7 +217,7 @@ const Candidates = () => {
         onSubmit={() => handleSubmit()}
         // onSelectUser={(user) => setSelectedUser(user)} // Set selected user
       />
-      
+{/*       
       <Messages
         className={styles.messages}
         visible={visible}
@@ -212,7 +225,7 @@ const Candidates = () => {
         actions={actions}
         parameters={parameters}
         messages={selectedUser ? selectedUser.detail : []} // Pass selected user's messages
-      />
+      /> */}
     </div>
   );
 };
