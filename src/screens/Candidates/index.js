@@ -192,7 +192,7 @@ const Candidates = () => {
 
   const init = async()=>{
     const [error, result] = await getAllResume();
-    setUsers(result.data)
+    setUsers(result?.data)
   }
 
   useEffect(()=>{
