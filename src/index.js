@@ -18,7 +18,7 @@ function Root({
     children
 }) {
     const [keycloakInstance, setKeycloak] = useState(null)
-    const [authenticated, setAuthenticated] = useState(false)
+    const [authenticated, setAuthenticated] = useState(true)
     const [userInfo, setUserInfo] = useState(null)
     const keycloak = new Keycloak(keycloakConfig)
     const darkMode = useDarkMode(false);
@@ -48,7 +48,7 @@ function Root({
             })
     }, [])
 
-    if (!keycloakInstance) return <>Loading...</> // or render a loading state
+    // if (!keycloakInstance) return <>Loading...</> // or render a loading state
 
     return <KeycloakContext.Provider value={{ keycloakInstance, authenticated, userInfo }}>
         <App />
