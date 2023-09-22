@@ -17,6 +17,7 @@ import { getMatchingResume } from "../../services/candidates";
 import Users from "../MessageCenter/Users";
 import Loader, { LoaderModal } from "../../components/Loader";
 import Modal from "../../components/Modal";
+import { Button, message, Steps, theme } from 'antd';
 
 
 
@@ -31,7 +32,36 @@ const SlickArrow = ({ currentSlide, slideCount, children, ...props }) => (
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 const navigation = ["Results", "Candidates"];
 
+const steps = [
+    {
+        title: 'First',
+        content: 'First-content',
+    },
+    {
+        title: 'Second',
+        content: 'Second-content',
+    },
+    {
+        title: 'Last',
+        content: 'Last-content',
+    },
+];
+
 const JobDescription = ({ className }) => {
+    const { token } = theme.useToken();
+    const [current, setCurrent] = useState(0);
+
+    const next = () => {
+        setCurrent(current + 1);
+    };
+
+    const prev = () => {
+        setCurrent(current - 1);
+    };
+
+    const items = steps.map((item) => ({ key: item.title, title: item.title }));
+
+
     const settings = {
         infinite: true,
         speed: 500,
@@ -166,7 +196,32 @@ const JobDescription = ({ className }) => {
     return (
 
         <>
+        <div className={styles.row}>
+            <>
+        <Steps current={current} items={items} />
+                <div >{steps[current].content}</div>
+                <div style={{ marginTop: 24 }} className={styles.row}>
+                    {current < steps.length - 1 && (
+                        <Button type="primary" onClick={() => next()}>
+                            Next
+                        </Button>
+                    )}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+                        </Button>
+                    )}
+                    {current > 0 && (
+                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                            Previous
+                        </Button>
+                    )}
+                </div>
+                </>
+        </div>
+        
             <div className={styles.row}>
+               
                 <div className={styles.col}>
                     <Card
                         className={cn(styles.card, className)}
@@ -236,7 +291,7 @@ const JobDescription = ({ className }) => {
                 </div>
                 <LoaderModal visible={loading} />
                 <div className={styles.col}>
-                {apiResponse &&<Card
+                    {apiResponse && <Card
                         className={cn(styles.card, className)}
                         title="Generated JD"
                         classTitle="title-red"
@@ -247,7 +302,7 @@ const JobDescription = ({ className }) => {
 
                         <div className={styles.wrap}>
 
-                             <>
+                            <>
                                 <div className={cn(styles.results)}>
                                     <div className={styles.title}>
                                         Job Description: {desig} {apiResponse?.keywords}
