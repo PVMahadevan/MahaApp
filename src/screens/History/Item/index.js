@@ -31,7 +31,7 @@ const Item = ({ className, item }) => {
         </div>
         <Icon name="plus-circle"  className={cn(styles.trigger, { [styles.active]: visible })} size="24" />
       </div>
-      <div className={styles.body}>{item.jobDescription}</div>
+      <div className={styles.body}>{item.jobDescription?.keywords?.join(',')}</div>
     </div>
   );
 };

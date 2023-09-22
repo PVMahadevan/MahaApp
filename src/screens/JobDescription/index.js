@@ -19,7 +19,9 @@ import Loader, { LoaderModal } from "../../components/Loader";
 import Modal from "../../components/Modal";
 import { Button, message, Steps, theme } from 'antd';
 import { disableBodyScroll, clearAllBodyScrollLocks, enableBodyScroll } from "body-scroll-lock";
-
+import {
+    LinkedinShareButton,
+  } from "react-share";
 
 
 const KeyCodes = {
@@ -213,8 +215,10 @@ const JobDescription = ({ className }) => {
         }
         toast.success('Created Job Description successfully')
         setApiResponse(result.data);
-        setCurrent(current + 1);
+        setCurrent(1);
     };
+
+    const summary = document?.getElementById('jobDescription')?.innerText;
 
     return (
 
@@ -285,15 +289,16 @@ const JobDescription = ({ className }) => {
                     }
                     {current === 1 && (
                         <div className={styles.col}>
-                            {apiResponse && <Card
+                            {apiResponse ? <Card
                                 className={cn(styles.card, className)}
                                 title="Generated JD"
                                 classTitle="title-red"
 
                             >
-                                <div className={styles.wrap}>
+                                <div className={styles.wrap} id="jobDescription">
                                     <>
                                         <div className={cn(styles.results)}>
+                                            {/* <pre>{JSON.stringify(apiResponse)}</pre> */}
                                             <div className={styles.title}>
                                                 Job Description: {desig} {apiResponse?.keywords?.join(',')}
                                             </div>
@@ -329,7 +334,7 @@ const JobDescription = ({ className }) => {
 
                                 </div>
 
-                            </Card>}
+                            </Card>: JSON.stringify(apiResponse)}
                         </div>
                     )}
                     {current === 2 && (
@@ -370,7 +375,9 @@ const JobDescription = ({ className }) => {
                 {current === 1 && (
                     <div className={styles.btnGroup}>
                         <Button type="default"
-                            icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={fetchJobDescription}>
+                            icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={()=>{
+                                setCurrent(0)
+                            }}>
                             Change Inputs
                         </Button>
                         <Button type="dashed"
@@ -400,6 +407,8 @@ const JobDescription = ({ className }) => {
                         >
                             <span>Publish</span>
                         </Button>
+
+                        <LinkedinShareButton title={`OrgX have an opening`} source="maha.orgx.ai" summary={summary} />
                     </div>
                 )}
                 {current === steps.length - 1 && (
