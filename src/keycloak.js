@@ -11,9 +11,9 @@ export const keycloakConfig = {
 
 
 if (!keycloak) {
-    keycloak = new Keycloak(keycloakConfig,{
-        checkLoginIframe: false
-    })
+    // keycloak = new Keycloak(keycloakConfig,{
+    //     checkLoginIframe: false
+    // })
 }
 
 export default keycloak

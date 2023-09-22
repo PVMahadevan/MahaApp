@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
-import Keycloak from 'keycloak-js'
+// import Keycloak from 'keycloak-js'
 import { keycloakConfig } from "./keycloak";
 import KeycloakContext from "./keycloakContext";
 import { Toaster } from "react-hot-toast";
@@ -20,33 +20,33 @@ function Root({
     const [keycloakInstance, setKeycloak] = useState(null)
     const [authenticated, setAuthenticated] = useState(true)
     const [userInfo, setUserInfo] = useState(null)
-    const keycloak = new Keycloak(keycloakConfig)
+    // const keycloak = new Keycloak(keycloakConfig)
     const darkMode = useDarkMode(false);
-    useEffect(() => {
-        darkMode.disable();
-        const setToken = () => {
-            const local_storage = {
-                token: keycloak.token,
-                user: keycloak.tokenParsed
-            }
+    // useEffect(() => {
+    //     darkMode.disable();
+    //     const setToken = () => {
+    //         const local_storage = {
+    //             token: keycloak.token,
+    //             user: keycloak.tokenParsed
+    //         }
 
-            setUserInfo(keycloak.tokenParsed)
-            localStorage.setItem('ta-auth', JSON.stringify(local_storage))
-            api.defaults.headers = { Authorization: getAuthorizationHeader(keycloak.token) }
-        }
-        keycloak.init({
-            enableLogging: true, flow: 'implicit',
-            // onLoad: 'login-required'
-        })
-            .then((authenticated) => {
-                setKeycloak(keycloak)
-                console.log(keycloak.tokenParsed);
-                if (authenticated) {
-                    setAuthenticated(authenticated)
-                    setToken()
-                }
-            })
-    }, [])
+    //         setUserInfo(keycloak.tokenParsed)
+    //         localStorage.setItem('ta-auth', JSON.stringify(local_storage))
+    //         api.defaults.headers = { Authorization: getAuthorizationHeader(keycloak.token) }
+    //     }
+    //     keycloak.init({
+    //         enableLogging: true, flow: 'implicit',
+    //         // onLoad: 'login-required'
+    //     })
+    //         .then((authenticated) => {
+    //             setKeycloak(keycloak)
+    //             console.log(keycloak.tokenParsed);
+    //             if (authenticated) {
+    //                 setAuthenticated(authenticated)
+    //                 setToken()
+    //             }
+    //         })
+    // }, [])
 
     // if (!keycloakInstance) return <>Loading...</> // or render a loading state
 
