@@ -148,12 +148,11 @@ const JobDescription = ({ className }) => {
         });
         setLoading(false)
         if (error) {
-            console.error("Error fetching job description:", error);
-            toast.error('Errored while creating Job Description')
+            console.error("Saved fetching job description:", error);
+            toast.error('Errored while Saving Job Description')
             return
         }
-        toast.success('Created Job Description successfully')
-        setApiResponse(JSON.parse(result.data));
+        toast.success('Saved Job Description successfully')
     }
 
 
@@ -207,7 +206,7 @@ const JobDescription = ({ className }) => {
             return
         }
         toast.success('Created Job Description successfully')
-        setApiResponse(JSON.parse(result.data));
+        setApiResponse(result.data);
     };
 
     return (
