@@ -5,7 +5,7 @@ import File from "../../components/File";
 import Card from "../../components/Card";
 import Icon from "../../components/Icon";
 import { Link } from "react-router-dom";
-import { saveResume, uploadResume } from "../../services/candidates";
+import { getResumeQuestions, saveResume, uploadResume } from "../../services/candidates";
 import toast from "react-hot-toast";
 import Editor from "./Editor";
 import { useEditor } from "@tiptap/react";
@@ -21,57 +21,64 @@ const content = '<p>Resume will Load once Parse</p>'
 const navigationData = [
     {
         label: "Technical proficiency",
+        key: 'techincalProficiency',
         content: {
             title: "Technical Proficiency",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Technical Proficiency section...",
         },
     },
     {
         label: "Continuous learning",
+        key: 'continousLearning',
         content: {
             title: "Continuous Learning",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Continuous Learning section...",
         },
     },
     {
         label: "C&I",
+        key: 'cicd',
         content: {
             title: "C&I",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the C&I section...",
         },
     },
     {
         label: "Leadership",
+        key: 'leadership',
         content: {
             title: "Leadership",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Leadership section...",
         },
     },
     {
         label: "Problem solving",
+        key: 'problemSolving',
         content: {
             title: "Problem Solving",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Problem Solving section...",
         },
     },
     {
         label: "Communication",
+        key: 'communication',
         content: {
             title: "Communication",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Communication section...",
         },
     },
     {
         label: "Adaptability & flexibility",
+        key: 'adaptablityAndFlexiblity',
         content: {
             title: "Adaptability & Flexibility",
-            subTitle: "Position Overview:",
+            subTitle: "Questions:",
             details: "Content for the Adaptability & Flexibility section...",
         },
     },
@@ -82,13 +89,15 @@ const Interview360 = ({ className }) => {
         extensions,
         content: content,
     })
-    const [metaData, setMetaData] = useState(null);
+    const [availableNavigationData, setAvailableNavigationData ] = useState(navigationData);
+     const [metaData, setMetaData] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [selectedFile, setSelectedFile] = useState();
     const [parsedData, setParsedData] = useState('')
+    const [questions, setQuestions] = useState(null)
     const [showParsedContainer, setShowParsedContainer] = useState(true);
-  const [loading, setLoading] = useState(false)
-  const handleParseClick = async () => {
+    const [loading, setLoading] = useState(false)
+    const handleParseClick = async () => {
         // setShowParsedContainer(!showParsedContainer);
         setLoading(true);
         const formData = new FormData();
@@ -156,6 +165,27 @@ const Interview360 = ({ className }) => {
         toast.success('Resume Saved')
     }
 
+    const handlePrepeareQuestions = async () => {
+        console.log('save resume')
+        setLoading(true);
+        const [error, result] = await getResumeQuestions({
+            resume: editor.getHTML(),
+            ...metaData,
+        })
+        setLoading(false);
+        if (error) {
+            console.log(error)
+            toast.error('Failed to Create Questions')
+            return;
+        }
+        console.log(result);
+        setQuestions(result?.data);
+        setAvailableNavigationData(navigationData?.filter((section)=>{
+            return result?.data?.[section?.key]?.length > 0;
+        }))
+        toast.success('Questions created')
+    }
+
     return (
         <div className={styles.row}>
             {showParsedContainer && (
@@ -193,152 +223,154 @@ const Interview360 = ({ className }) => {
                     </Card>
                 </div>
             )}
-                <LoaderModal visible={loading} />
+            <LoaderModal visible={loading} />
 
             <div className={styles.right}>
-                {showParsedContainer ? parsedData && 
-                (
-                    
-                    <Card
-                        className={cn(styles.card, className)}
-                        title="Parsed details"
-                        classTitle="title-blue"
-                    >
-                        <Input
-                            className={styles.field}
-                            label="Candidate Name"
-                            required
-                            placeholder="Enter Candidate Name"
-                            value={metaData?.name}
-                            name='name'
-                            onChange={(e) => {
-                                setMetaData({
-                                    ...metaData, 
-                                    [e.target.name]: e.target.value,
-                                })
-                            }}
-                            maxLength={40}
-                        />
-                          <Input
-                            className={styles.field}
-                            label="Designation"
-                            required
-                            placeholder="Enter Designation"
-                            value={metaData?.designation}
-                            name='designation'
-                            onChange={(e) => {
-                                setMetaData({
-                                    ...metaData, 
-                                    [e.target.name]: e.target.value,
-                                })
-                            }}
-                            maxLength={40}
-                        />
-                          <Input
-                            className={styles.field}
-                            label="Candidate Email"
-                            required
-                            placeholder="Enter Candidate Email"
-                            value={metaData?.email}
-                            name='name'
-                            onChange={(e) => {
-                                setMetaData({
-                                    ...metaData, 
-                                    [e.target.name]: e.target.value,
-                                })
-                            }}
-                            maxLength={40}
-                        />
-                          <Input
-                            className={styles.field}
-                            label="Candidate Phone Number"
-                            required
-                            placeholder="Enter Candidate Phone"
-                            value={metaData?.phone}
-                            name='phone'
-                            onChange={(e) => {
-                                setMetaData({
-                                    ...metaData, 
-                                    [e.target.name]: e.target.value,
-                                })
-                            }}
-                            maxLength={40}
-                        />
-                          <Input
-                            className={styles.field}
-                            label="Years of Experience"
-                            required
-                            placeholder="Enter Years of Experience"
-                            value={metaData?.experience}
-                            name='experience'
-                            onChange={(e) => {
-                                setMetaData({
-                                    ...metaData, 
-                                    [e.target.name]: e.target.value,
-                                })
-                            }}
-                            maxLength={40}
-                        />
-                        <button
-                            disabled={!metaData || !parsedData}
-                            type="button"
-                            className={cn("button", styles.button)}
-                            onClick={handleSaveClick}
-                        >
-                            Save Candidate
-                        </button>
-                        <hr></hr>
-                        <Editor editor={editor} />
-                    </Card>
-                ) : 
-                (
-                    <Card
-                        className={cn(styles.card, className)}
-                        title="Questions"
-                        classTitle="title-blue"
-                        head={
-                            <Link
-                                className={cn("button-stroke button-small", styles.button)}
-                                onClick={() => {
-                                    setShowParsedContainer(false)
-                                }}
-                            >
-                                <Icon name="arrow-left" size="24" />
-                                <span>Back</span>
-                            </Link>
-                        }
-                    >
-                        <div className={styles.questioncontainer}>
-                            <div className={styles.nav}>
-                                {navigationData.map((section, index) => (
-                                    <button
-                                        key={index}
-                                        className={cn(styles.link, {
-                                            [styles.active]: index === activeIndex,
-                                        })}
-                                        onClick={() => handleButtonClick(index)}
-                                    >
-                                        {section.label}
-                                    </button>
-                                ))}
-                            </div>
+                {questions && <Card
+                    className={cn(styles.card, className)}
+                    title="Questions"
+                    classTitle="title-blue"
+                >
+                    <div className={styles.questioncontainer}>
+                        <div className={styles.nav}>
+                            {availableNavigationData.map((section, index) => (
+                                <button
+                                    key={index}
+                                    className={cn(styles.link, {
+                                        [styles.active]: index === activeIndex,
+                                    })}
+                                    onClick={() => {
+                                        // if(!questions?.[section?.key]?.length){
+                                        //     return toast.error('No questions under this topic')
+                                        // }
+                                        handleButtonClick(index);
+                                    }}
+                                >
+                                    {section.label}
+                                </button>
+                            ))}
+                        </div>
 
-                            <div className={cn(styles.results)}>
-                                <div className={styles.title}>
-                                    {navigationData[activeIndex].content.title}
-                                </div>
-                                <div className={styles.subTitle}>
-                                    {navigationData[activeIndex].content.subTitle}
-                                </div>
-                                <div className={styles.content}>
-                                    {navigationData[activeIndex].content.details}
-                                </div>
+                        <div className={cn(styles.results)}>
+                            <div className={styles.title}>
+                                {availableNavigationData[activeIndex].content.title}
+                            </div>
+                            <div className={styles.subTitle}>
+                                {availableNavigationData[activeIndex].content.subTitle}
+                            </div>
+                            <div className={styles.content}>
+                                <ol>
+                                   {questions?.[availableNavigationData[activeIndex].key]?.map((question=>(
+                                     <li>{question}</li>
+                                   )))}
+                                </ol>
                             </div>
                         </div>
-                    </Card>
-                )}
+                    </div>
+                </Card>}
+                {showParsedContainer && parsedData &&
+                    (
 
-
+                        <Card
+                            className={cn(styles.card, className)}
+                            title="Parsed details"
+                            classTitle="title-blue"
+                        >
+                            <Input
+                                className={styles.field}
+                                label="Candidate Name"
+                                required
+                                placeholder="Enter Candidate Name"
+                                value={metaData?.name}
+                                name='name'
+                                onChange={(e) => {
+                                    setMetaData({
+                                        ...metaData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }}
+                                maxLength={40}
+                            />
+                            <Input
+                                className={styles.field}
+                                label="Designation"
+                                required
+                                placeholder="Enter Designation"
+                                value={metaData?.designation}
+                                name='designation'
+                                onChange={(e) => {
+                                    setMetaData({
+                                        ...metaData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }}
+                                maxLength={40}
+                            />
+                            <Input
+                                className={styles.field}
+                                label="Candidate Email"
+                                required
+                                placeholder="Enter Candidate Email"
+                                value={metaData?.email}
+                                name='name'
+                                onChange={(e) => {
+                                    setMetaData({
+                                        ...metaData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }}
+                                maxLength={40}
+                            />
+                            <Input
+                                className={styles.field}
+                                label="Candidate Phone Number"
+                                required
+                                placeholder="Enter Candidate Phone"
+                                value={metaData?.phone}
+                                name='phone'
+                                onChange={(e) => {
+                                    setMetaData({
+                                        ...metaData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }}
+                                maxLength={40}
+                            />
+                            <Input
+                                className={styles.field}
+                                label="Years of Experience"
+                                required
+                                placeholder="Enter Years of Experience"
+                                value={metaData?.experience}
+                                name='experience'
+                                onChange={(e) => {
+                                    setMetaData({
+                                        ...metaData,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }}
+                                maxLength={40}
+                            />
+                            <button
+                                disabled={!metaData || !parsedData}
+                                type="button"
+                                className={cn("button", styles.button)}
+                                onClick={handleSaveClick}
+                            >
+                                Save Candidate
+                            </button>
+                            <button
+                                disabled={!metaData || !parsedData}
+                                type="button"
+                                className={cn("button", styles.button)}
+                                onClick={handlePrepeareQuestions}
+                            >
+                                Prepare Questions
+                            </button>
+                            <hr></hr>
+                            <Editor editor={editor} />
+                        </Card>
+                    )}
 
             </div>
         </div >

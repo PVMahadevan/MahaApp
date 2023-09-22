@@ -93,7 +93,6 @@ const JobDescription = ({ className }) => {
     const [tags, setTags] = useState([]);
     const [apiResponse, setApiResponse] = useState(null);
 
-    console.log(apiResponse)
     function handleDelete(i) {
         setTags(tags.filter((tag, index) => index !== i));
     }
@@ -182,7 +181,10 @@ const JobDescription = ({ className }) => {
         console.log(error, result);
         setUsers(result);
         setLoading(false)
+        setCurrent(2);
     }
+
+    const publishToLinkedin = () => { }
 
 
     //     const downloadJobDescriptionAsPDF = () => {
@@ -198,7 +200,6 @@ const JobDescription = ({ className }) => {
 
     //Fetch API
     const fetchJobDescription = async () => {
-        setCurrent(current + 1);
         setLoading(true)
         const [error, result] = await createJobDescription({
             role: desig,
@@ -212,376 +213,203 @@ const JobDescription = ({ className }) => {
         }
         toast.success('Created Job Description successfully')
         setApiResponse(result.data);
+        setCurrent(current + 1);
     };
 
     return (
 
         <>
-        <div  className={cn(styles.row, 'mb-40')}>
-        <Steps current={current} items={items} />
-        </div>
-        <div className={styles.row}>
-            <>
-       
-        {current == 0 &&(
-             <div className={styles.col}>
-             <Card
-                 className={cn(styles.card, className)}
-                 title="RoleForge JD"
-                 classTitle="title-green"
-             >
-
-                 <Input
-                     className={styles.field}
-                     label="Designation"
-                     required
-                     placeholder="Enter Role"
-                     value={desig}
-                     onChange={(e) => setDesig(e.target.value)}
-                     maxLength={100}
-                 />
-
-                 <div className={styles.head}>
-                     <div className={styles.label}>
-                         Keywords{""}
-                     </div>
-                     <div className={styles.counter}>
-                         <span> {tags.length}</span>/12 tags
-                     </div>
-                 </div>
-
-
-                 <div className={styles.tags}>
-                     <ReactTags
-                         handleDelete={handleDelete}
-                         handleAddition={handleAddition}
-                         handleDrag={handleDrag}
-                         delimiters={delimiters}
-                         handleTagClick={handleTagClick}
-                         onClearAll={onClearAll}
-                         onTagUpdate={onTagUpdate}
-                         placeholder="Enter Keyword Description"
-                         required
-                         minQueryLength={2}
-                         maxLength={50}
-                         autofocus={false}
-                         allowDeleteFromEmptyInput={true}
-                         autocomplete={true}
-                         readOnly={false}
-                         allowUnique={true}
-                         allowDragDrop={true}
-                         inline={true}
-                         inputFieldPosition="bottom"
-                         allowAdditionFromPaste={true}
-                         editable={true}
-                         clearAll={false}
-                         tags={tags}
-                     /> </div>
-
-
-                 <button
-                     type="submit"
-                     disabled={!tags.length || !desig}
-                     className={cn("button", styles.button)}
-                     onClick={fetchJobDescription}
-                 >
-                     <Icon name="magic-wand" size="22" />
-                     Generate
-                 </button>
-
-             </Card>
-         </div>
-        )
-}
-        {current == 1 &&(
- <div className={styles.col}>
- {apiResponse && <Card
-     className={cn(styles.card, className)}
-     title="Generated JD"
-     classTitle="title-red"
-
- >
-
-
-
-     <div className={styles.wrap}>
-
-         <>
-             <div className={cn(styles.results)}>
-                 <div className={styles.title}>
-                     Job Description: {desig} {apiResponse?.keywords}
-                 </div>
-                 <div className={styles.subTitle}>
-                     Roles And Responsibilities
-                 </div>
-                 <div className={styles.content}>
-                     {apiResponse?.rolesAndResponsibilities?.map(item => <p>{item}</p>)}
-                 </div>
-                 <div className={styles.subTitle}>
-                     Qualifications
-                 </div>
-                 <div className={styles.content}>
-                     {apiResponse?.qualifications?.map(item => <p>{item}</p>)}
-                 </div>
-                 <div className={styles.subTitle}>
-                     Benefits Package
-                 </div>
-                 <div className={styles.content}>
-                     {apiResponse?.benefitsPackage?.map(item => <p>{item}</p>)}
-                 </div>
-                 <div className={styles.subTitle}>
-                     Experience
-                 </div>
-                 <div className={styles.content}>
-                     {apiResponse?.experience?.map(item => <p>{item}</p>)}
-                 </div>
-             </div>
-
-
-
-         </>
-
-     </div>
-     <div className={styles.btnGroup}>
-         <button
-             className={cn("button-stroke button-small mr-10", styles.button)}
-             onClick={downloadJobDescription}
-         >
-             <Icon name="edit" size="24" />
-             <span>Regenerate</span>
-         </button>
-         <button
-             className={cn("button-stroke button-small mr-10", styles.button)}
-             onClick={saveJobDesc}
-         >
-             <Icon name="check" size="24" />
-             <span>Save</span>
-         </button>
-
-         <button
-             className={cn("button-stroke button-small mr-10", styles.button)}
-             onClick={viewMatchingCandidates}
-         >
-             <Icon name="check" size="24" />
-             <span>View Matching Candidates</span>
-         </button>
-
-         <button
-             className={cn("button button-small mr-10", styles.button)}
-             onClick={downloadJobDescription}
-         >
-             {/* <Icon name="edit" size="24" /> */}
-             <span>Publish</span>
-         </button>
-     </div>
- </Card>}
-</div>
-        )}
-        {current == 2 && (
-              <Card className={cn(styles.card, 'mt-10')}>
-              {users?.length > 0 && <Users
-                  onSelectUser={(user) => {
-                      console.log("Selected user:", user);
-                  }}
-                  className={styles.users}
-                  navigation={navigation}
-                  items={users}
-                  setVisible={() => { }}
-                  search={''}
-                  setSearch={() => { }}
-                  onSubmit={() => { }}
-              />}
-             
-
-          </Card>
-        )}
-
-        
-                {/* <div >{steps[current].content}</div> */}
-              
-                </>
-        </div>
-        
+            <div className={cn(styles.row, 'mb-40')}>
+                <Steps current={current} items={items} />
+            </div>
             <div className={styles.row}>
-               
-                {/* <div className={styles.col}>
-                    <Card
-                        className={cn(styles.card, className)}
-                        title="RoleForge JD"
-                        classTitle="title-green"
-                    >
+                <>
 
-                        <Input
-                            className={styles.field}
-                            label="Designation"
-                            required
-                            placeholder="Enter Role"
-                            value={desig}
-                            onChange={(e) => setDesig(e.target.value)}
-                            maxLength={100}
-                        />
+                    {current === 0 && (
+                        <div className={styles.col}>
+                            <Card
+                                className={cn(styles.card, className)}
+                                title="RoleForge JD"
+                                classTitle="title-green"
+                            >
 
-                        <div className={styles.head}>
-                            <div className={styles.label}>
-                                Keywords{""}
-                            </div>
-                            <div className={styles.counter}>
-                                <span> {tags.length}</span>/12 tags
-                            </div>
-                        </div>
+                                <Input
+                                    className={styles.field}
+                                    label="Designation"
+                                    required
+                                    placeholder="Enter Role"
+                                    value={desig}
+                                    onChange={(e) => setDesig(e.target.value)}
+                                    maxLength={100}
+                                />
 
-
-                        <div className={styles.tags}>
-                            <ReactTags
-                                handleDelete={handleDelete}
-                                handleAddition={handleAddition}
-                                handleDrag={handleDrag}
-                                delimiters={delimiters}
-                                handleTagClick={handleTagClick}
-                                onClearAll={onClearAll}
-                                onTagUpdate={onTagUpdate}
-                                placeholder="Enter Keyword Description"
-                                required
-                                minQueryLength={2}
-                                maxLength={50}
-                                autofocus={false}
-                                allowDeleteFromEmptyInput={true}
-                                autocomplete={true}
-                                readOnly={false}
-                                allowUnique={true}
-                                allowDragDrop={true}
-                                inline={true}
-                                inputFieldPosition="bottom"
-                                allowAdditionFromPaste={true}
-                                editable={true}
-                                clearAll={false}
-                                tags={tags}
-                            /> </div>
-
-
-                        <button
-                            type="submit"
-                            disabled={!tags.length || !desig}
-                            className={cn("button", styles.button)}
-                            onClick={fetchJobDescription}
-                        >
-                            <Icon name="magic-wand" size="22" />
-                            Generate
-                        </button>
-
-                    </Card>
-                </div> */}
-                <LoaderModal visible={loading} />
-                {/* <div className={styles.col}>
-                    {apiResponse && <Card
-                        className={cn(styles.card, className)}
-                        title="Generated JD"
-                        classTitle="title-red"
-
-                    >
-
-
-
-                        <div className={styles.wrap}>
-
-                            <>
-                                <div className={cn(styles.results)}>
-                                    <div className={styles.title}>
-                                        Job Description: {desig} {apiResponse?.keywords}
+                                <div className={styles.head}>
+                                    <div className={styles.label}>
+                                        Keywords{""}
                                     </div>
-                                    <div className={styles.subTitle}>
-                                        Roles And Responsibilities
-                                    </div>
-                                    <div className={styles.content}>
-                                        {apiResponse?.rolesAndResponsibilities?.map(item => <p>{item}</p>)}
-                                    </div>
-                                    <div className={styles.subTitle}>
-                                        Qualifications
-                                    </div>
-                                    <div className={styles.content}>
-                                        {apiResponse?.qualifications?.map(item => <p>{item}</p>)}
-                                    </div>
-                                    <div className={styles.subTitle}>
-                                        Benefits Package
-                                    </div>
-                                    <div className={styles.content}>
-                                        {apiResponse?.benefitsPackage?.map(item => <p>{item}</p>)}
-                                    </div>
-                                    <div className={styles.subTitle}>
-                                        Experience
-                                    </div>
-                                    <div className={styles.content}>
-                                        {apiResponse?.experience?.map(item => <p>{item}</p>)}
+                                    <div className={styles.counter}>
+                                        <span> {tags.length}</span>/12 tags
                                     </div>
                                 </div>
 
 
-
-                            </>
-
+                                <div className={styles.tags}>
+                                    <ReactTags
+                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddition}
+                                        handleDrag={handleDrag}
+                                        delimiters={delimiters}
+                                        handleTagClick={handleTagClick}
+                                        onClearAll={onClearAll}
+                                        onTagUpdate={onTagUpdate}
+                                        placeholder="Enter Keyword Description"
+                                        required
+                                        minQueryLength={2}
+                                        maxLength={50}
+                                        autofocus={false}
+                                        allowDeleteFromEmptyInput={true}
+                                        autocomplete={true}
+                                        readOnly={false}
+                                        allowUnique={true}
+                                        allowDragDrop={true}
+                                        inline={true}
+                                        inputFieldPosition="bottom"
+                                        allowAdditionFromPaste={true}
+                                        editable={true}
+                                        clearAll={false}
+                                        tags={tags}
+                                    /> </div>
+                            </Card>
                         </div>
-                        <div className={styles.btnGroup}>
-                            <button
-                                className={cn("button-stroke button-small mr-10", styles.button)}
-                                onClick={downloadJobDescription}
-                            >
-                                <Icon name="edit" size="24" />
-                                <span>Regenerate</span>
-                            </button>
-                            <button
-                                className={cn("button-stroke button-small mr-10", styles.button)}
-                                onClick={saveJobDesc}
-                            >
-                                <Icon name="check" size="24" />
-                                <span>Save</span>
-                            </button>
+                    )
+                    }
+                    {current === 1 && (
+                        <div className={styles.col}>
+                            {apiResponse && <Card
+                                className={cn(styles.card, className)}
+                                title="Generated JD"
+                                classTitle="title-red"
 
-                            <button
-                                className={cn("button-stroke button-small mr-10", styles.button)}
-                                onClick={viewMatchingCandidates}
                             >
-                                <Icon name="check" size="24" />
-                                <span>View Matching Candidates</span>
-                            </button>
+                                <div className={styles.wrap}>
+                                    <>
+                                        <div className={cn(styles.results)}>
+                                            <div className={styles.title}>
+                                                Job Description: {desig} {apiResponse?.keywords?.join(',')}
+                                            </div>
+                                            <div className={styles.subTitle}>
+                                                Roles And Responsibilities
+                                            </div>
+                                            <div className={styles.content}>
+                                                {apiResponse?.rolesAndResponsibilities?.map(item => <p>{item}</p>)}
+                                            </div>
+                                            <div className={styles.subTitle}>
+                                                Qualifications
+                                            </div>
+                                            <div className={styles.content}>
+                                                {apiResponse?.qualifications?.map(item => <p>{item}</p>)}
+                                            </div>
+                                            <div className={styles.subTitle}>
+                                                Benefits Package
+                                            </div>
+                                            <div className={styles.content}>
+                                                {apiResponse?.benefitsPackage?.map(item => <p>{item}</p>)}
+                                            </div>
+                                            <div className={styles.subTitle}>
+                                                Experience
+                                            </div>
+                                            <div className={styles.content}>
+                                                {apiResponse?.experience?.map(item => <p>{item}</p>)}
+                                            </div>
+                                        </div>
 
-                            <button
-                                className={cn("button button-small mr-10", styles.button)}
-                                onClick={downloadJobDescription}
-                            >
-                                <span>Publish</span>
-                            </button>
+
+
+                                    </>
+
+                                </div>
+
+                            </Card>}
                         </div>
-                    </Card>}
-                </div> */}
+                    )}
+                    {current === 2 && (
+                        <Card className={cn(styles.card, 'mt-10')}>
+                            {users?.length > 0 && <Users
+                                onSelectUser={(user) => {
+                                    console.log("Selected user:", user);
+                                }}
+                                className={styles.users}
+                                navigation={navigation}
+                                items={users}
+                                setVisible={() => { }}
+                                search={''}
+                                setSearch={() => { }}
+                                onSubmit={() => { }}
+                            />}
+
+
+                        </Card>
+                    )}
+
+
+                    {/* <div >{steps[current].content}</div> */}
+
+                </>
+            </div>
+
+            <div className={styles.row}>
+                <LoaderModal visible={loading} />
             </div>
             <div style={{ marginTop: 24 }} className={styles.row}>
-                    {current < steps.length - 1 && (
-                        <Button type="primary"  disabled={!tags.length || !desig} onClick={fetchJobDescription}>
-                           <Icon name="magic-wand" size="14" /> Generate
+                {current === 0 && (
+                    <Button type="primary"
+                        icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={fetchJobDescription}>
+                        Generate
+                    </Button>
+                )}
+                {current === 1 && (
+                    <div className={styles.btnGroup}>
+                        <Button type="default"
+                            icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={fetchJobDescription}>
+                            Change Inputs
                         </Button>
-                    //      <button
-                    //      type="submit"
-                    //      disabled={!tags.length || !desig}
-                    //      className={cn("button", styles.button)}
-                    //      onClick={fetchJobDescription}
-                    //  >
-                    //      <Icon name="magic-wand" size="22" />
-                    //      Generate
-                    //  </button>
-                    )}
-                    {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
+                        <Button type="dashed"
+                            icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={fetchJobDescription}>
+                            ReGenerate
                         </Button>
-                    )}
-                    {current > 0 && (
-                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                            Previous
+
+                        <Button
+                            type="primary"
+                            icon={<Icon name="lightning" size="14" />}
+                            onClick={viewMatchingCandidates}
+                        >
+                            <span>View Matching Candidates</span>
                         </Button>
-                    )}
-                </div>
-                
-          
+                        <Button
+                            type="dashed"
+                            icon={<Icon name="check" size="14" />}
+                            onClick={saveJobDesc}
+                        >
+
+                            <span>Save to History</span>
+                        </Button>
+                        <Button
+                            type="dashed"
+                            icon={<Icon name="share" size="14" />}
+                            onClick={publishToLinkedin}
+                        >
+                            <span>Publish</span>
+                        </Button>
+                    </div>
+                )}
+                {current === steps.length - 1 && (
+                    <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                        Done
+                    </Button>
+                )}
+            </div>
+
+
             <TooltipGlodal />
         </>
     );
