@@ -23,6 +23,7 @@ export const LoaderModal = ({ visible }) => {
       alignItems: 'center',
       justifyContent: 'center'
     }}
+    hideClose
   >
     <Loader className={styles.loader} />
   </Modal>)

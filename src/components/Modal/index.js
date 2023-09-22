@@ -6,7 +6,7 @@ import cn from "classnames";
 import styles from "./Modal.module.sass";
 import Icon from "../Icon";
 
-const Modal = ({ outerClassName, visible, onClose, children, modalStyle }) => {
+const Modal = ({ outerClassName, visible, onClose = ()=>{}, children, modalStyle, hideClose }) => {
   const escFunction = useCallback(
     (e) => {
       if (e.keyCode === 27) {
@@ -38,7 +38,7 @@ const Modal = ({ outerClassName, visible, onClose, children, modalStyle }) => {
         <div className={cn(styles.outer, outerClassName)} style={modalStyle}>
           <OutsideClickHandler onOutsideClick={onClose}>
             {children}
-            {onClose && <button className={styles.close} onClick={onClose}>
+            {!hideClose && <button className={styles.close} onClick={onClose}>
               <Icon name="close" size="20" />
             </button>}
           </OutsideClickHandler>

@@ -160,7 +160,7 @@ const JobDescription = ({ className }) => {
             return
         }
         toast.success('Created Job Description successfully')
-        setApiResponse(result.data);
+        setApiResponse(JSON.parse(result.data));
     };
 
     return (
@@ -224,6 +224,7 @@ const JobDescription = ({ className }) => {
 
                         <button
                             type="submit"
+                            disabled={!tags.length || !desig}
                             className={cn("button", styles.button)}
                             onClick={fetchJobDescription}
                         >
@@ -235,7 +236,7 @@ const JobDescription = ({ className }) => {
                 </div>
                 <LoaderModal visible={loading} />
                 <div className={styles.col}>
-                    <Card
+                {apiResponse &&<Card
                         className={cn(styles.card, className)}
                         title="Generated JD"
                         classTitle="title-red"
@@ -246,26 +247,35 @@ const JobDescription = ({ className }) => {
 
                         <div className={styles.wrap}>
 
-                            <>
+                             <>
                                 <div className={cn(styles.results)}>
                                     <div className={styles.title}>
-                                        Job Description: {desig}
+                                        Job Description: {desig} {apiResponse?.keywords}
                                     </div>
                                     <div className={styles.subTitle}>
-                                        Position Overview:
+                                        Roles And Responsibilities
                                     </div>
                                     <div className={styles.content}>
-                                        {apiResponse}
+                                        {apiResponse?.rolesAndResponsibilities?.map(item => <p>{item}</p>)}
+                                    </div>
+                                    <div className={styles.subTitle}>
+                                        Qualifications
                                     </div>
                                     <div className={styles.content}>
-                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
-                                        </div>
-                                        <div className={styles.subTitle}>
-                                            Position Overview:
-                                        </div>
-                                        <div className={styles.content}>
-                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
-                                        </div>
+                                        {apiResponse?.qualifications?.map(item => <p>{item}</p>)}
+                                    </div>
+                                    <div className={styles.subTitle}>
+                                        Benefits Package
+                                    </div>
+                                    <div className={styles.content}>
+                                        {apiResponse?.benefitsPackage?.map(item => <p>{item}</p>)}
+                                    </div>
+                                    <div className={styles.subTitle}>
+                                        Experience
+                                    </div>
+                                    <div className={styles.content}>
+                                        {apiResponse?.experience?.map(item => <p>{item}</p>)}
+                                    </div>
                                 </div>
 
 
@@ -305,7 +315,7 @@ const JobDescription = ({ className }) => {
                                 <span>Publish</span>
                             </button>
                         </div>
-                    </Card>
+                    </Card>}
                 </div>
             </div>
             <Card className={cn(styles.card, 'mt-10')}>
