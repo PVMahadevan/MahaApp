@@ -400,15 +400,19 @@ const JobDescription = ({ className }) => {
 
                             <span>Save to History</span>
                         </Button>
+                        
+
+                        <LinkedinShareButton 
+                        url="https://orgx.ai"
+                        title={`OrgX have an opening`} source="OrgX" summary={summary} >
                         <Button
                             type="dashed"
                             icon={<Icon name="share" size="14" />}
-                            onClick={publishToLinkedin}
+                            // onClick={publishToLinkedin}
                         >
                             <span>Publish</span>
                         </Button>
-
-                        <LinkedinShareButton title={`OrgX have an opening`} source="maha.orgx.ai" summary={summary} />
+                        </LinkedinShareButton>
                     </div>
                 )}
                 {current === steps.length - 1 && (
