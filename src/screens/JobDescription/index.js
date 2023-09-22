@@ -11,7 +11,7 @@ import Candidates from "./Candidates";
 import { jsPDF } from "jspdf";
 import Slider from "react-slick";
 import api from "../../services/custom/api";
-import { createJobDescription } from "../../services/jobs";
+import { createJobDescription, saveJobDescription } from "../../services/jobs";
 import toast from "react-hot-toast";
 import { getMatchingResume } from "../../services/candidates";
 import Users from "../MessageCenter/Users";
@@ -92,7 +92,7 @@ const JobDescription = ({ className }) => {
     const [tags, setTags] = useState([]);
     const [apiResponse, setApiResponse] = useState(null);
 
-
+    console.log(apiResponse)
     function handleDelete(i) {
         setTags(tags.filter((tag, index) => index !== i));
     }
@@ -138,6 +138,23 @@ const JobDescription = ({ className }) => {
         link.click();
         document.body.removeChild(link);
     };
+
+    const saveJobDesc = async () => {
+        setLoading(true)
+        const [error, result] = await saveJobDescription({
+            role: desig,
+            tags,
+            jobDescription: apiResponse
+        });
+        setLoading(false)
+        if (error) {
+            console.error("Error fetching job description:", error);
+            toast.error('Errored while creating Job Description')
+            return
+        }
+        toast.success('Created Job Description successfully')
+        setApiResponse(JSON.parse(result.data));
+    }
 
 
     const downloadJobDescriptionAsPDF = () => {
@@ -348,7 +365,7 @@ const JobDescription = ({ className }) => {
                             </button>
                             <button
                                 className={cn("button-stroke button-small mr-10", styles.button)}
-                                onClick={downloadJobDescription}
+                                onClick={saveJobDesc}
                             >
                                 <Icon name="check" size="24" />
                                 <span>Save</span>
