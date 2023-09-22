@@ -15,6 +15,8 @@ import { createJobDescription } from "../../services/jobs";
 import toast from "react-hot-toast";
 import { getMatchingResume } from "../../services/candidates";
 import Users from "../MessageCenter/Users";
+import Loader, { LoaderModal } from "../../components/Loader";
+import Modal from "../../components/Modal";
 
 
 
@@ -54,6 +56,7 @@ const JobDescription = ({ className }) => {
             },
         ],
     };
+    const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState([]);
     const [desig, setDesig] = useState();
     const [tags, setTags] = useState([]);
@@ -121,12 +124,14 @@ const JobDescription = ({ className }) => {
         doc.save('JobDescription.pdf');
     }
 
-    const viewMatchingCandidates = async ()=>{
+    const viewMatchingCandidates = async () => {
+        setLoading(true)
         const [error, result] = await getMatchingResume({
             jobDescription: apiResponse
         })
         console.log(error, result);
         setUsers(result);
+        setLoading(false)
     }
 
 
@@ -143,17 +148,19 @@ const JobDescription = ({ className }) => {
 
     //Fetch API
     const fetchJobDescription = async () => {
+        setLoading(true)
         const [error, result] = await createJobDescription({
             role: desig,
             tags,
         });
+        setLoading(false)
         if (error) {
             console.error("Error fetching job description:", error);
             toast.error('Errored while creating Job Description')
             return
         }
-            toast.success('Created Job Description successfully')
-            setApiResponse(result.data);
+        toast.success('Created Job Description successfully')
+        setApiResponse(result.data);
     };
 
     return (
@@ -226,6 +233,7 @@ const JobDescription = ({ className }) => {
 
                     </Card>
                 </div>
+                <LoaderModal visible={loading} />
                 <div className={styles.col}>
                     <Card
                         className={cn(styles.card, className)}
@@ -293,18 +301,18 @@ const JobDescription = ({ className }) => {
                 </div>
             </div>
             <Card className={cn(styles.card, 'mt-10')}>
-            {users?.length > 0 && <Users
-       onSelectUser={(user) => {
-        console.log("Selected user:", user);
-      }}
-        className={styles.users}
-        navigation={navigation}
-        items={users}
-        setVisible={()=>{}}
-        search={''}
-        setSearch={()=>{}}
-        onSubmit={() => {}}
-      />}
+                {users?.length > 0 && <Users
+                    onSelectUser={(user) => {
+                        console.log("Selected user:", user);
+                    }}
+                    className={styles.users}
+                    navigation={navigation}
+                    items={users}
+                    setVisible={() => { }}
+                    search={''}
+                    setSearch={() => { }}
+                    onSubmit={() => { }}
+                />}
                 {/* <Slider className="candidate-slider" {...settings}>
                     <div className={styles.flexRow}><img src="/images/content/product-pic-2.jpg" /> <div className={styles.score}><img src="/images/score.png" width="17" />87</div></div>
                     <div><img src="/images/content/product-pic-1.jpg" /></div>

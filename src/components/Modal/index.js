@@ -6,7 +6,7 @@ import cn from "classnames";
 import styles from "./Modal.module.sass";
 import Icon from "../Icon";
 
-const Modal = ({ outerClassName, visible, onClose, children }) => {
+const Modal = ({ outerClassName, visible, onClose, children, modalStyle }) => {
   const escFunction = useCallback(
     (e) => {
       if (e.keyCode === 27) {
@@ -34,13 +34,13 @@ const Modal = ({ outerClassName, visible, onClose, children }) => {
 
   return createPortal(
     visible && (
-      <div id="modal" className={styles.modal}>
-        <div className={cn(styles.outer, outerClassName)}>
+      <div id="modal" className={styles.modal} >
+        <div className={cn(styles.outer, outerClassName)} style={modalStyle}>
           <OutsideClickHandler onOutsideClick={onClose}>
             {children}
-            <button className={styles.close} onClick={onClose}>
+            {onClose && <button className={styles.close} onClick={onClose}>
               <Icon name="close" size="20" />
-            </button>
+            </button>}
           </OutsideClickHandler>
         </div>
       </div>

@@ -86,8 +86,10 @@ const Interview360 = ({ className }) => {
     const [selectedFile, setSelectedFile] = useState();
     const [parsedData, setParsedData] = useState('')
     const [showParsedContainer, setShowParsedContainer] = useState(true);
-    const handleParseClick = async () => {
+  const [loading, setLoading] = useState(false)
+  const handleParseClick = async () => {
         // setShowParsedContainer(!showParsedContainer);
+        setLoading(true);
         const formData = new FormData();
 
         // Update the formData object
@@ -118,6 +120,7 @@ const Interview360 = ({ className }) => {
         setParsedData(content)
         editor?.commands?.setContent(content)
         setShowParsedContainer(true);
+        setLoading(false);
         toast.success('File parsed successfully')
 
     };
@@ -138,10 +141,12 @@ const Interview360 = ({ className }) => {
 
     const handleSaveClick = async () => {
         console.log('save resume')
+        setLoading(true);
         const [error, result] = await saveResume({
             content: editor.getHTML(),
             ...metaData,
         })
+        setLoading(false);
         if (error) {
             console.log(error)
             toast.error('Failed to Save Resume')

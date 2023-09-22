@@ -9,10 +9,13 @@ const History = ({ className }) => {
   const options = [];
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const init = async () => {
+    setLoading(true)
     const [error, result] = await getJobDescriptionHistory();
     setItems(result?.data)
+    setLoading(false)
   }
 
   useEffect(() => {
