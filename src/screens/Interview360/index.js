@@ -11,6 +11,7 @@ import Editor from "./Editor";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Input from "../../components/TextInput";
+import { LoaderModal } from "../../components/Loader";
 
 const extensions = [
     StarterKit,
@@ -192,6 +193,8 @@ const Interview360 = ({ className }) => {
                     </Card>
                 </div>
             )}
+                <LoaderModal visible={loading} />
+
             <div className={styles.right}>
                 {showParsedContainer ? parsedData && 
                 (
