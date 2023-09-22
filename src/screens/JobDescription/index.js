@@ -257,7 +257,15 @@ const JobDescription = ({ className }) => {
                                     <div className={styles.content}>
                                         {apiResponse}
                                     </div>
-
+                                    <div className={styles.content}>
+                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
+                                        </div>
+                                        <div className={styles.subTitle}>
+                                            Position Overview:
+                                        </div>
+                                        <div className={styles.content}>
+                                            We are seeking a creative and skilled Content Writer to join our team. As a Content Writer, you will play a key role in crafting compelling and engaging content for various platforms, including websites, blogs, social media, and more.
+                                        </div>
                                 </div>
 
 
