@@ -403,9 +403,24 @@ const JobDescription = ({ className }) => {
                     </div>
                 )}
                 {current === steps.length - 1 && (
-                    <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                        Done
-                    </Button>
+                    <div className={styles.btnGroup}>
+                        <Button type="primary"
+                            icon={<Icon name="magic-wand" size="14" />} disabled={!tags.length || !desig} onClick={viewMatchingCandidates}>
+                            Regenerate List
+                        </Button>
+                        <Button type="dashed"
+                            icon={<Icon name="magic-wand" size="14" />} onClick={() => {
+                                setCurrent(1);
+                            }}>
+                            Go Back
+                        </Button>
+                        <Button type="dashed"
+                            icon={<Icon name="magic-wand" size="14" />} onClick={() => {
+                                setCurrent(0);
+                            }}>
+                            Restart
+                        </Button>
+                    </div>
                 )}
             </div>
 
