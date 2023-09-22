@@ -18,6 +18,7 @@ import Users from "../MessageCenter/Users";
 import Loader, { LoaderModal } from "../../components/Loader";
 import Modal from "../../components/Modal";
 import { Button, message, Steps, theme } from 'antd';
+import { disableBodyScroll, clearAllBodyScrollLocks, enableBodyScroll } from "body-scroll-lock";
 
 
 
@@ -34,15 +35,15 @@ const navigation = ["Results", "Candidates"];
 
 const steps = [
     {
-        title: 'First',
+        title: 'RoleForge JD',
         content: 'First-content',
     },
     {
-        title: 'Second',
+        title: 'Generated JD',
         content: 'Second-content',
     },
     {
-        title: 'Last',
+        title: 'Matching Candidates',
         content: 'Last-content',
     },
 ];
@@ -132,13 +133,14 @@ const JobDescription = ({ className }) => {
         const blob = new Blob([apiResponse || ''], { type: 'text/plain' });
         const href = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = href;
-        link.download = 'JobDescription.txt';
-        document.body.appendChild(link);
-        link.click();
+        // link.href = href;
+        // link.download = 'JobDescription.txt';
+        // document.body.appendChild(link);
+        // link.click();
         document.body.removeChild(link);
+        setCurrent(current - 1);
     };
-
+    const target = document.querySelector("body");
     const saveJobDesc = async () => {
         setLoading(true)
         const [error, result] = await saveJobDescription({
@@ -150,9 +152,11 @@ const JobDescription = ({ className }) => {
         if (error) {
             console.error("Saved fetching job description:", error);
             toast.error('Errored while Saving Job Description')
+            enableBodyScroll(target);
             return
         }
-        toast.success('Saved Job Description successfully')
+        toast.success('Saved Job Description successfully');
+        enableBodyScroll(target);
     }
 
 
@@ -194,6 +198,7 @@ const JobDescription = ({ className }) => {
 
     //Fetch API
     const fetchJobDescription = async () => {
+        setCurrent(current + 1);
         setLoading(true)
         const [error, result] = await createJobDescription({
             role: desig,
@@ -212,33 +217,194 @@ const JobDescription = ({ className }) => {
     return (
 
         <>
+        <div  className={cn(styles.row, 'mb-40')}>
+        <Steps current={current} items={items} />
+        </div>
         <div className={styles.row}>
             <>
-        <Steps current={current} items={items} />
-                <div >{steps[current].content}</div>
-                <div style={{ marginTop: 24 }} className={styles.row}>
-                    {current < steps.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
-                            Next
-                        </Button>
-                    )}
-                    {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
-                        </Button>
-                    )}
-                    {current > 0 && (
-                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                            Previous
-                        </Button>
-                    )}
-                </div>
+       
+        {current == 0 &&(
+             <div className={styles.col}>
+             <Card
+                 className={cn(styles.card, className)}
+                 title="RoleForge JD"
+                 classTitle="title-green"
+             >
+
+                 <Input
+                     className={styles.field}
+                     label="Designation"
+                     required
+                     placeholder="Enter Role"
+                     value={desig}
+                     onChange={(e) => setDesig(e.target.value)}
+                     maxLength={100}
+                 />
+
+                 <div className={styles.head}>
+                     <div className={styles.label}>
+                         Keywords{""}
+                     </div>
+                     <div className={styles.counter}>
+                         <span> {tags.length}</span>/12 tags
+                     </div>
+                 </div>
+
+
+                 <div className={styles.tags}>
+                     <ReactTags
+                         handleDelete={handleDelete}
+                         handleAddition={handleAddition}
+                         handleDrag={handleDrag}
+                         delimiters={delimiters}
+                         handleTagClick={handleTagClick}
+                         onClearAll={onClearAll}
+                         onTagUpdate={onTagUpdate}
+                         placeholder="Enter Keyword Description"
+                         required
+                         minQueryLength={2}
+                         maxLength={50}
+                         autofocus={false}
+                         allowDeleteFromEmptyInput={true}
+                         autocomplete={true}
+                         readOnly={false}
+                         allowUnique={true}
+                         allowDragDrop={true}
+                         inline={true}
+                         inputFieldPosition="bottom"
+                         allowAdditionFromPaste={true}
+                         editable={true}
+                         clearAll={false}
+                         tags={tags}
+                     /> </div>
+
+
+                 <button
+                     type="submit"
+                     disabled={!tags.length || !desig}
+                     className={cn("button", styles.button)}
+                     onClick={fetchJobDescription}
+                 >
+                     <Icon name="magic-wand" size="22" />
+                     Generate
+                 </button>
+
+             </Card>
+         </div>
+        )
+}
+        {current == 1 &&(
+ <div className={styles.col}>
+ {apiResponse && <Card
+     className={cn(styles.card, className)}
+     title="Generated JD"
+     classTitle="title-red"
+
+ >
+
+
+
+     <div className={styles.wrap}>
+
+         <>
+             <div className={cn(styles.results)}>
+                 <div className={styles.title}>
+                     Job Description: {desig} {apiResponse?.keywords}
+                 </div>
+                 <div className={styles.subTitle}>
+                     Roles And Responsibilities
+                 </div>
+                 <div className={styles.content}>
+                     {apiResponse?.rolesAndResponsibilities?.map(item => <p>{item}</p>)}
+                 </div>
+                 <div className={styles.subTitle}>
+                     Qualifications
+                 </div>
+                 <div className={styles.content}>
+                     {apiResponse?.qualifications?.map(item => <p>{item}</p>)}
+                 </div>
+                 <div className={styles.subTitle}>
+                     Benefits Package
+                 </div>
+                 <div className={styles.content}>
+                     {apiResponse?.benefitsPackage?.map(item => <p>{item}</p>)}
+                 </div>
+                 <div className={styles.subTitle}>
+                     Experience
+                 </div>
+                 <div className={styles.content}>
+                     {apiResponse?.experience?.map(item => <p>{item}</p>)}
+                 </div>
+             </div>
+
+
+
+         </>
+
+     </div>
+     <div className={styles.btnGroup}>
+         <button
+             className={cn("button-stroke button-small mr-10", styles.button)}
+             onClick={downloadJobDescription}
+         >
+             <Icon name="edit" size="24" />
+             <span>Regenerate</span>
+         </button>
+         <button
+             className={cn("button-stroke button-small mr-10", styles.button)}
+             onClick={saveJobDesc}
+         >
+             <Icon name="check" size="24" />
+             <span>Save</span>
+         </button>
+
+         <button
+             className={cn("button-stroke button-small mr-10", styles.button)}
+             onClick={viewMatchingCandidates}
+         >
+             <Icon name="check" size="24" />
+             <span>View Matching Candidates</span>
+         </button>
+
+         <button
+             className={cn("button button-small mr-10", styles.button)}
+             onClick={downloadJobDescription}
+         >
+             {/* <Icon name="edit" size="24" /> */}
+             <span>Publish</span>
+         </button>
+     </div>
+ </Card>}
+</div>
+        )}
+        {current == 2 && (
+              <Card className={cn(styles.card, 'mt-10')}>
+              {users?.length > 0 && <Users
+                  onSelectUser={(user) => {
+                      console.log("Selected user:", user);
+                  }}
+                  className={styles.users}
+                  navigation={navigation}
+                  items={users}
+                  setVisible={() => { }}
+                  search={''}
+                  setSearch={() => { }}
+                  onSubmit={() => { }}
+              />}
+             
+
+          </Card>
+        )}
+
+        
+                {/* <div >{steps[current].content}</div> */}
+              
                 </>
         </div>
         
             <div className={styles.row}>
                
-                <div className={styles.col}>
+                {/* <div className={styles.col}>
                     <Card
                         className={cn(styles.card, className)}
                         title="RoleForge JD"
@@ -304,9 +470,9 @@ const JobDescription = ({ className }) => {
                         </button>
 
                     </Card>
-                </div>
+                </div> */}
                 <LoaderModal visible={loading} />
-                <div className={styles.col}>
+                {/* <div className={styles.col}>
                     {apiResponse && <Card
                         className={cn(styles.card, className)}
                         title="Generated JD"
@@ -382,36 +548,40 @@ const JobDescription = ({ className }) => {
                                 className={cn("button button-small mr-10", styles.button)}
                                 onClick={downloadJobDescription}
                             >
-                                {/* <Icon name="edit" size="24" /> */}
                                 <span>Publish</span>
                             </button>
                         </div>
                     </Card>}
-                </div>
+                </div> */}
             </div>
-            <Card className={cn(styles.card, 'mt-10')}>
-                {users?.length > 0 && <Users
-                    onSelectUser={(user) => {
-                        console.log("Selected user:", user);
-                    }}
-                    className={styles.users}
-                    navigation={navigation}
-                    items={users}
-                    setVisible={() => { }}
-                    search={''}
-                    setSearch={() => { }}
-                    onSubmit={() => { }}
-                />}
-                {/* <Slider className="candidate-slider" {...settings}>
-                    <div className={styles.flexRow}><img src="/images/content/product-pic-2.jpg" /> <div className={styles.score}><img src="/images/score.png" width="17" />87</div></div>
-                    <div><img src="/images/content/product-pic-1.jpg" /></div>
-                    <div><img src="/images/content/product-pic-3.jpg" /></div>
-                    <div><img src="/images/content/product-pic-2.jpg" /></div>
-                    <div><img src="/images/content/product-pic-1.jpg" /></div>
-                    <div><img src="/images/content/product-pic-3.jpg" /></div>
-                </Slider> */}
-
-            </Card>
+            <div style={{ marginTop: 24 }} className={styles.row}>
+                    {current < steps.length - 1 && (
+                        <Button type="primary"  disabled={!tags.length || !desig} onClick={fetchJobDescription}>
+                           <Icon name="magic-wand" size="14" /> Generate
+                        </Button>
+                    //      <button
+                    //      type="submit"
+                    //      disabled={!tags.length || !desig}
+                    //      className={cn("button", styles.button)}
+                    //      onClick={fetchJobDescription}
+                    //  >
+                    //      <Icon name="magic-wand" size="22" />
+                    //      Generate
+                    //  </button>
+                    )}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+                        </Button>
+                    )}
+                    {current > 0 && (
+                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                            Previous
+                        </Button>
+                    )}
+                </div>
+                
+          
             <TooltipGlodal />
         </>
     );

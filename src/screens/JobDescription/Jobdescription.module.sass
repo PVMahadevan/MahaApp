@@ -102,9 +102,10 @@
         display: block
 
 .col
+    flex: 0 0 100%
     &:nth-child(2)
-        flex: 0 0 calc(100% - 340px)
-        width: calc(100% - 340px)
+        // flex: 0 0 calc(100% - 340px)
+        // width: calc(100% - 340px)
         padding-left: 16px
         +x
             flex: 0 0 calc(100% - 324px)
@@ -118,7 +119,7 @@
             padding-right: 0
     &:first-child
         flex-shrink: 0
-        width: 340px
+        // width: 340px
         +x
             width: 324px
         +d

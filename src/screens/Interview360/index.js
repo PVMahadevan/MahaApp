@@ -193,7 +193,9 @@ const Interview360 = ({ className }) => {
                 </div>
             )}
             <div className={styles.right}>
-                {showParsedContainer ? parsedData && (
+                {showParsedContainer ? parsedData && 
+                (
+                    
                     <Card
                         className={cn(styles.card, className)}
                         title="Parsed details"
@@ -285,7 +287,8 @@ const Interview360 = ({ className }) => {
                         <hr></hr>
                         <Editor editor={editor} />
                     </Card>
-                ) : (
+                ) : 
+                (
                     <Card
                         className={cn(styles.card, className)}
                         title="Questions"

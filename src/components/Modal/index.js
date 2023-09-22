@@ -26,9 +26,9 @@ const Modal = ({ outerClassName, visible, onClose = ()=>{}, children, modalStyle
   useEffect(() => {
     if (visible) {
       const target = document.querySelector("#modal");
-      disableBodyScroll(target);
+      // disableBodyScroll(target);
     } else {
-      clearAllBodyScrollLocks();
+      // clearAllBodyScrollLocks();
     }
   }, [visible]);
 
