@@ -181,9 +181,9 @@ const Interview360 = ({ className }) => {
         console.log(result);
         setQuestions(result?.data);
         setAvailableNavigationData(navigationData
-            // ?.filter((section)=>{
-            // return result?.data?.[section?.key]?.length > 0;
-            // })
+            ?.filter((section)=>{
+            return result?.data?.[section?.key]?.length > 0;
+            })
         )
         toast.success('Questions created')
     }
@@ -279,7 +279,7 @@ const Interview360 = ({ className }) => {
 
                         <Card
                             className={cn(styles.card, className)}
-                            title="Parsed details"
+                            title={`${metaData?.name} Resume`}
                             classTitle="title-blue"
                         >
                             <Input
