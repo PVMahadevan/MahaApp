@@ -186,6 +186,8 @@ const Interview360 = ({ className }) => {
         toast.success('Questions created')
     }
 
+    console.log({availableNavigationData, activeIndex, })
+
     return (
         <div className={styles.row}>
             {showParsedContainer && (
@@ -253,14 +255,14 @@ const Interview360 = ({ className }) => {
 
                         <div className={cn(styles.results)}>
                             <div className={styles.title}>
-                                {availableNavigationData[activeIndex].content.title}
+                                {availableNavigationData[activeIndex]?.content?.title}
                             </div>
                             <div className={styles.subTitle}>
-                                {availableNavigationData[activeIndex].content.subTitle}
+                                {availableNavigationData[activeIndex]?.content?.subTitle}
                             </div>
                             <div className={styles.content}>
                                 <ol>
-                                   {questions?.[availableNavigationData[activeIndex].key]?.map((question=>(
+                                   {questions?.[availableNavigationData[activeIndex]?.key]?.map((question=>(
                                      <li>{question}</li>
                                    )))}
                                 </ol>
