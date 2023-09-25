@@ -180,13 +180,17 @@ const Interview360 = ({ className }) => {
         }
         console.log(result);
         setQuestions(result?.data);
-        setAvailableNavigationData(navigationData?.filter((section)=>{
-            return result?.data?.[section?.key]?.length > 0;
-        }))
+        setAvailableNavigationData(navigationData
+            // ?.filter((section)=>{
+            // return result?.data?.[section?.key]?.length > 0;
+            // })
+        )
         toast.success('Questions created')
     }
 
     console.log({availableNavigationData, activeIndex, })
+
+    const selected = availableNavigationData[activeIndex];
 
     return (
         <div className={styles.row}>
@@ -255,16 +259,16 @@ const Interview360 = ({ className }) => {
 
                         <div className={cn(styles.results)}>
                             <div className={styles.title}>
-                                {availableNavigationData[activeIndex]?.content?.title}
+                                {selected?.content?.title}
                             </div>
                             <div className={styles.subTitle}>
-                                {availableNavigationData[activeIndex]?.content?.subTitle}
+                                {selected?.content?.subTitle}
                             </div>
                             <div className={styles.content}>
                                 <ol>
-                                   {questions?.[availableNavigationData[activeIndex]?.key]?.map((question=>(
+                                   {Array.isArray(questions?.[selected?.key]) ? questions?.[selected?.key]?.map((question=>(
                                      <li>{question}</li>
-                                   )))}
+                                   ))) : <li>{questions?.[selected?.key] || '###'}</li>}
                                 </ol>
                             </div>
                         </div>
