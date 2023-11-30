@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const baseURL = process.env.REACT_APP_API_BASE_URL;
+export const baseURL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4445';
 
 export const getToken = () => {
   let authInfo = localStorage.getItem("ta-auth")

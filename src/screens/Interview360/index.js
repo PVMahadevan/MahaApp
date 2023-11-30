@@ -115,11 +115,13 @@ const Interview360 = ({ className }) => {
         // Request made to the backend api
         // Send formData object
         const [error, result] = await uploadResume(formData)
+        setLoading(false);
         if (error) {
             console.log(error)
             toast.error('File upload failed')
             return;
         }
+
         console.log({ result })
         const content = result?.data?.html || result?.data?.text;
         try {
